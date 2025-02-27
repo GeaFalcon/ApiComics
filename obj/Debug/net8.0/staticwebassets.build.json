@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "ARuYJi+eWdqPopuqAwtMN5qGJatY9kltHdMq2bxlLEU=",
+  "Source": "ComicReaderBackend",
+  "BasePath": "_content/ComicReaderBackend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
