@@ -1,11 +1,19 @@
 {
   "Version": 1,
-  "Hash": "ARuYJi+eWdqPopuqAwtMN5qGJatY9kltHdMq2bxlLEU=",
+  "Hash": "3B+rO41WcTqRi72alWlfeqQmlBb46bteO1/S6jTIu+g=",
   "Source": "ComicReaderBackend",
   "BasePath": "_content/ComicReaderBackend",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "ComicReaderBackend\\wwwroot",
+      "Source": "ComicReaderBackend",
+      "ContentRoot": "C:\\Users\\Draco\\Desktop\\ComicReaderBackend\\wwwroot\\",
+      "BasePath": "_content/ComicReaderBackend",
+      "Pattern": "**"
+    }
+  ],
   "Assets": []
 }

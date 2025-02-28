@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ComicReaderBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d887e3cc9821cfbfaf2fac71a52b821cbf5806d3")]
 [assembly: System.Reflection.AssemblyProductAttribute("ComicReaderBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ComicReaderBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
