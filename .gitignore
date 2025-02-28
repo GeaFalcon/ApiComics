@@ -1,0 +1,9 @@
+# 🔹 Ignorar toda la carpeta wwwroot
+wwwroot/
+
+# 🔹 Pero permitir la subcarpeta /uploads/
+!wwwroot/uploads/
+
+# 🔹 Ignorar todos los archivos dentro de /uploads/ excepto un placeholder vacío
+wwwroot/uploads/*
+!wwwroot/uploads/.gitkeep
