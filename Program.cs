@@ -27,7 +27,7 @@ builder.Services.AddCors(options =>
                   .AllowAnyMethod();
         });
 });
-
+  
 // 🔹 Agregar los controladores para manejar rutas API
 builder.Services.AddControllers();
 // 🔹 Configurar Swagger solo si estamos en modo desarrollo
