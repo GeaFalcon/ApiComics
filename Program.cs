@@ -54,7 +54,7 @@ app.UseCors();
 
 app.UseStaticFiles();
 // 🔹 Habilitar redirección HTTPS
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 // 🔹 Habilitar autorización (en caso de que en el futuro agreguemos autenticación)
 app.UseAuthorization();
 // 🔹 Mapea automáticamente los controladores para que funcionen las rutas API
