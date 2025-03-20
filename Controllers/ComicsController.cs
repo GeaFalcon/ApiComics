@@ -4,6 +4,7 @@ using ComicReaderBackend.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using System.IO.Compression;
 namespace ComicReaderBackend.Controllers
 {
     [Route("api/comics")] // 🔹 La ruta base será /api/comics
@@ -43,6 +44,105 @@ namespace ComicReaderBackend.Controllers
 
             return Ok(comic);
         }
+        // GET /api/comics/view/{id}
+        [HttpGet("download/{id}")]
+        public async Task<IActionResult> DownloadComic(int id)
+        {
+            var comic = await _context.comics.FindAsync(id);
+
+            if (comic == null)
+            {
+                return NotFound(new { mensaje = $"No se encontró el cómic con ID {id}." });
+            }
+
+            var filePath = Path.Combine(_environment.WebRootPath, comic.RutaArchivo.TrimStart('/'));
+
+            if (!System.IO.File.Exists(filePath))
+            {
+                return NotFound(new { mensaje = "El archivo del cómic no existe en el servidor." });
+            }
+
+            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            var contentType = "application/octet-stream"; // Tipo genérico, puedes mejorarlo según el formato
+
+            return File(fileStream, contentType, Path.GetFileName(filePath));
+        }
+        [HttpGet("view/{id}")]
+        public async Task<IActionResult> ViewComic(int id)
+        {
+            var comic = await _context.comics.FindAsync(id);
+
+            if (comic == null)
+            {
+                return NotFound(new { mensaje = $"No se encontró el cómic con ID {id}." });
+            }
+
+            var filePath = Path.Combine(_environment.WebRootPath, comic.RutaArchivo.TrimStart('/'));
+
+            if (!System.IO.File.Exists(filePath))
+            {
+                return NotFound(new { mensaje = "El archivo del cómic no existe en el servidor." });
+            }
+
+            var extension = Path.GetExtension(filePath).ToLower();
+            var contentType = extension switch
+            {
+                ".pdf" => "application/pdf",
+                ".jpg" or ".jpeg" => "image/jpeg",
+                ".png" => "image/png",
+                ".cbz" => "application/vnd.comicbook+zip",
+                _ => "application/octet-stream" // Para otros formatos desconocidos
+            };
+
+            return PhysicalFile(filePath, contentType);
+        }
+
+        // Con este endpoint se extraen las paginas de los formatos cbz y cbr, y se almacenan en la carpeta "extracted" dentro de la carpeta "wwwroot".
+        [HttpGet("view/pages/{id}")]
+        public async Task<IActionResult> ViewComicPages(int id)
+        {
+            var comic = await _context.comics.FindAsync(id);
+
+            if (comic == null)
+            {
+                return NotFound(new { mensaje = $"No se encontró el cómic con ID {id}." });
+            }
+
+            var filePath = Path.Combine(_environment.WebRootPath, comic.RutaArchivo.TrimStart('/'));
+
+            if (!System.IO.File.Exists(filePath))
+            {
+                return NotFound(new { mensaje = "El archivo del cómic no existe en el servidor." });
+            }
+
+            var extractPath = Path.Combine(_environment.WebRootPath, "extracted", comic.Id.ToString());
+
+            if (!Directory.Exists(extractPath))
+            {
+                Directory.CreateDirectory(extractPath);
+            }
+
+            // Extraer las imágenes del CBZ (ZIP)
+            using (var archive = ZipFile.OpenRead(filePath))
+            {
+                foreach (var entry in archive.Entries)
+                {
+                    var entryPath = Path.Combine(extractPath, entry.Name);
+                    if (!System.IO.File.Exists(entryPath)) // Evitar sobrescribir
+                    {
+                        entry.ExtractToFile(entryPath);
+                    }
+                }
+            }
+
+            // Obtener las URLs de las imágenes extraídas
+            var images = Directory.GetFiles(extractPath)
+                .Select(img => $"{Request.Scheme}://{Request.Host}/extracted/{comic.Id}/{Path.GetFileName(img)}")
+                .ToList();
+
+            return Ok(new { paginas = images });
+        }
+
         // 🔹 POST: /api/comics/upload -> Subir un cómic con archivo
         [HttpPost("upload")]
         public async Task<IActionResult> UploadComic(

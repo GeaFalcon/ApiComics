@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "3B+rO41WcTqRi72alWlfeqQmlBb46bteO1/S6jTIu+g=",
+  "Hash": "/ig7H2xx9upr535AdYIaiZ3FJgAKsHGvmruZN4/KlFs=",
   "Source": "ComicReaderBackend",
   "BasePath": "_content/ComicReaderBackend",
   "Mode": "Default",
@@ -15,5 +15,25 @@
       "Pattern": "**"
     }
   ],
-  "Assets": []
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\Draco\\Desktop\\ComicReaderBackend\\wwwroot\\uploads\\Solo Leveling Ragnarok - [1].cbz",
+      "SourceId": "ComicReaderBackend",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Draco\\Desktop\\ComicReaderBackend\\wwwroot\\",
+      "BasePath": "_content/ComicReaderBackend",
+      "RelativePath": "uploads/Solo Leveling Ragnarok - [1].cbz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\Solo Leveling Ragnarok - [1].cbz"
+    }
+  ]
 }

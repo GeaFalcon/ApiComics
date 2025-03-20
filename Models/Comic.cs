@@ -2,7 +2,6 @@ using System.ComponentModel.DataAnnotations; //importamos anotaciones para valid
 
 namespace ComicReaderBackend.Models
 {
-    // Este modelo representa la tabla comic en la base de datos 
     public class Comic 
     {
         [Key]
@@ -18,7 +17,7 @@ namespace ComicReaderBackend.Models
         public string Formato { get; set; }
 
         [Required(ErrorMessage = "La ruta del archivo es obligatoria.")]
-        public string RutaArchivo { get; set; }
+        public string RutaArchivo { get; set; } = "wwwroot/uploads/";
 
         public DateTime FechaSubida { get; set; } = DateTime.UtcNow;
     }
