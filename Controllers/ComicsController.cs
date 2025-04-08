@@ -1,12 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
 using ComicReaderBackend.Data;
 using ComicReaderBackend.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
-using System.IO;
-using System.IO.Compression;
-namespace ComicReaderBackend.Controllers
-{
+namespace ComicReaderBackend.Controllers{
     [Route("api/comics")] // 🔹 La ruta base será /api/comics
     [ApiController]
     public class ComicsController : ControllerBase
