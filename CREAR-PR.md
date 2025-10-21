@@ -60,12 +60,18 @@ Esta PR incluye:
 
 - ✅ Backend completo con ASP.NET Core 8.0
 - ✅ Frontend completo con React 18
-- ✅ Autenticación JWT
+- ✅ Autenticación JWT con sesión de 30 días
 - ✅ Sistema de roles (Admin/Usuario)
 - ✅ Sistema de favoritos, votos e historial
 - ✅ Docker Compose para inicio con 1 comando
 - ✅ Inicialización automática de base de datos
-- ✅ Documentación completa
+- ✅ Scripts de inicio para Windows, Linux y macOS
+- ✅ Documentación completa y detallada
+  - Guía de instalación desde cero
+  - Guía específica para Windows
+  - Links de descarga directos
+  - Checklist de instalación
+  - Solución de problemas comunes
 
 **Rama:** `claude/comic-platform-setup-011CULqAQPXsi2y5DHyDSm9w` → `master`
 

@@ -40,7 +40,12 @@ dotnet run
 > - ✅ Crea usuario administrador por defecto
 > - ✅ Configura todo lo necesario
 >
-> Ver [INICIO-RAPIDO.md](INICIO-RAPIDO.md) para más detalles.
+> **📚 Guías de Instalación:**
+> - **¿No tienes nada instalado?** → Ver [INSTALACION-DESDE-CERO.md](INSTALACION-DESDE-CERO.md)
+> - **Inicio rápido** → Ver [INICIO-RAPIDO.md](INICIO-RAPIDO.md)
+> - **Links de descarga** → Ver [LINKS-DESCARGA.md](LINKS-DESCARGA.md)
+> - **Checklist de instalación** → Ver [CHECKLIST-INSTALACION.md](CHECKLIST-INSTALACION.md)
+> - **Específico para Windows** → Ver [WINDOWS-SETUP.md](WINDOWS-SETUP.md)
 
 ---
 
