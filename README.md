@@ -7,8 +7,11 @@ Plataforma web completa para lectura y gestión de comics, desarrollada con **AS
 ### Opción 1: Docker (Recomendado - Un Solo Comando)
 
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
+
+> **Nota:** En versiones modernas de Docker Desktop es `docker compose` (con espacio), no `docker-compose`.
+> Si usas Windows, ver [WINDOWS-SETUP.md](WINDOWS-SETUP.md) para guía específica.
 
 Accede a http://localhost:5000 y usa:
 - **Usuario:** admin

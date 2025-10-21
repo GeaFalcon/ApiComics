@@ -3,13 +3,21 @@
 ## Opción 1: Con Docker (Recomendado - TODO AUTOMÁTICO)
 
 ### Requisitos
-- Docker
-- Docker Compose
+- Docker Desktop (incluye Docker Compose)
 
 ### Comando único
+
+**Linux/Mac:**
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
+
+**Windows (PowerShell):**
+```powershell
+docker compose up --build
+```
+
+> **Nota:** En versiones modernas de Docker Desktop es `docker compose` (con espacio), no `docker-compose`
 
 ¡Eso es todo! Esto automáticamente:
 - ✅ Levanta PostgreSQL
@@ -22,7 +30,7 @@ docker-compose up --build
 
 Para detener:
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ---
@@ -119,8 +127,8 @@ ports:
 
 ### Reiniciar desde cero (Docker)
 ```bash
-docker-compose down -v
-docker-compose up --build
+docker compose down -v
+docker compose up --build
 ```
 
 ---
