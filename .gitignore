@@ -1,10 +1,8 @@
-# 🔹 Ignorar toda la carpeta wwwroot
-wwwroot/
-
-# 🔹 Pero permitir la subcarpeta /uploads/
-!wwwroot/uploads/
-
-# 🔹 Ignorar todos los archivos dentro de /uploads/ excepto un placeholder vacío
+# 🔹 Ignorar solo archivos subidos por usuarios, pero permitir archivos del frontend
 wwwroot/uploads/*
 !wwwroot/uploads/.gitkeep
+
+# 🔹 Ignorar archivos extraídos de CBZ/CBR
+wwwroot/extracted/
+
 obj/
