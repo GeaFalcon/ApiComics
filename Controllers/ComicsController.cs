@@ -1,50 +1,278 @@
 using ComicReaderBackend.Data;
 using ComicReaderBackend.Models;
-namespace ComicReaderBackend.Controllers{
-    [Route("api/comics")] // 🔹 La ruta base será /api/comics
+using ComicReaderBackend.DTOs;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using System.IO.Compression;
+
+namespace ComicReaderBackend.Controllers
+{
+    [Route("api/comics")]
     [ApiController]
     public class ComicsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly IWebHostEnvironment _environment; // 🔹 Agregar esta variable
-        // 🔹 Inyectamos la base de datos en el controlador
+        private readonly IWebHostEnvironment _environment;
+
         public ComicsController(ApplicationDbContext context, IWebHostEnvironment environment)
         {
             _context = context;
             _environment = environment;
         }
 
-        // 🔹 Endpoint GET para obtener todos los cómics
+        // GET: /api/comics - Obtener todos los cómics aprobados
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Comic>>> GetComics()
+        public async Task<ActionResult<IEnumerable<object>>> GetComics()
         {
-        var comics = await _context.comics.ToListAsync();
-        
-        Console.WriteLine($"🔍 Cantidad de cómics encontrados: {comics.Count}");
-        
-        return Ok(comics);
+            var comics = await _context.Comics
+                .Where(c => c.Aprobado == true)
+                .Include(c => c.SubidoPor)
+                .Include(c => c.Votos)
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Titulo,
+                    c.Autor,
+                    c.Descripcion,
+                    c.Formato,
+                    c.FechaSubida,
+                    SubidoPor = c.SubidoPor!.Username,
+                    TotalVotos = c.Votos!.Count
+                })
+                .OrderByDescending(c => c.FechaSubida)
+                .ToListAsync();
 
+            return Ok(comics);
         }
-        // 🔹 GET: /api/comics/{id} -> Obtener un cómic por su ID
+
+        // GET: /api/comics/pending - Obtener comics pendientes de aprobación (Solo Admin)
+        [HttpGet("pending")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<IEnumerable<object>>> GetPendingComics()
+        {
+            var comics = await _context.Comics
+                .Where(c => c.Aprobado == false)
+                .Include(c => c.SubidoPor)
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Titulo,
+                    c.Autor,
+                    c.Descripcion,
+                    c.Formato,
+                    c.FechaSubida,
+                    SubidoPor = c.SubidoPor!.Username,
+                    SubidoPorId = c.SubidoPorId
+                })
+                .OrderBy(c => c.FechaSubida)
+                .ToListAsync();
+
+            return Ok(comics);
+        }
+
+        // GET: /api/comics/my-uploads - Obtener comics subidos por el usuario actual
+        [HttpGet("my-uploads")]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<object>>> GetMyUploads()
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+
+            var comics = await _context.Comics
+                .Where(c => c.SubidoPorId == userId)
+                .Include(c => c.Votos)
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Titulo,
+                    c.Autor,
+                    c.Descripcion,
+                    c.Formato,
+                    c.FechaSubida,
+                    c.Aprobado,
+                    c.FechaAprobacion,
+                    TotalVotos = c.Votos!.Count
+                })
+                .OrderByDescending(c => c.FechaSubida)
+                .ToListAsync();
+
+            return Ok(comics);
+        }
+
+        // GET: /api/comics/{id} - Obtener un cómic por su ID
         [HttpGet("{id}")]
         public async Task<ActionResult<Comic>> GetComicById(int id)
         {
-            var comic = await _context.comics.FirstOrDefaultAsync(c => c.Id == id);
+            var comic = await _context.Comics
+                .Include(c => c.SubidoPor)
+                .Include(c => c.Votos)
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             if (comic == null)
             {
                 return NotFound(new { mensaje = $"No se encontró el cómic con ID {id}." });
             }
 
-            return Ok(comic);
+            // Solo mostrar comics aprobados a usuarios normales
+            if (!comic.Aprobado && !User.IsInRole("Admin"))
+            {
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                if (userId == null || int.Parse(userId) != comic.SubidoPorId)
+                {
+                    return NotFound(new { mensaje = $"No se encontró el cómic con ID {id}." });
+                }
+            }
+
+            return Ok(new
+            {
+                comic.Id,
+                comic.Titulo,
+                comic.Autor,
+                comic.Descripcion,
+                comic.Formato,
+                comic.FechaSubida,
+                comic.Aprobado,
+                SubidoPor = comic.SubidoPor!.Username,
+                TotalVotos = comic.Votos!.Count,
+                comic.RutaArchivo
+            });
         }
-        // GET /api/comics/view/{id}
-        [HttpGet("download/{id}")]
-        public async Task<IActionResult> DownloadComic(int id)
+
+        // POST: /api/comics/upload - Subir un nuevo cómic
+        [HttpPost("upload")]
+        [Authorize]
+        public async Task<IActionResult> UploadComic([FromForm] ComicUploadDto uploadDto)
         {
-            var comic = await _context.comics.FindAsync(id);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+
+            if (uploadDto.Archivo == null || uploadDto.Archivo.Length == 0)
+            {
+                return BadRequest(new { mensaje = "El archivo es obligatorio." });
+            }
+
+            // Verificar formato permitido
+            var formatosPermitidos = new List<string> { "pdf", "cbz", "cbr", "jpg", "png", "jpeg" };
+            var extension = Path.GetExtension(uploadDto.Archivo.FileName).ToLower().TrimStart('.');
+
+            if (!formatosPermitidos.Contains(extension))
+            {
+                return BadRequest(new { mensaje = "Formato no permitido. Usa PDF, CBZ, CBR o imágenes." });
+            }
+
+            // Guardar archivo
+            var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            var fileName = $"{Guid.NewGuid()}_{uploadDto.Archivo.FileName}";
+            var filePath = Path.Combine(uploadsFolder, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await uploadDto.Archivo.CopyToAsync(stream);
+            }
+
+            // Crear el comic en la base de datos
+            var nuevoComic = new Comic
+            {
+                Titulo = uploadDto.Titulo,
+                Autor = uploadDto.Autor,
+                Descripcion = uploadDto.Descripcion,
+                Formato = uploadDto.Formato,
+                RutaArchivo = "/uploads/" + fileName,
+                FechaSubida = DateTime.UtcNow,
+                SubidoPorId = userId,
+                Aprobado = false // Los comics necesitan aprobación de un admin
+            };
+
+            _context.Comics.Add(nuevoComic);
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                mensaje = "Cómic subido correctamente. Está pendiente de aprobación por un administrador.",
+                comic = new
+                {
+                    nuevoComic.Id,
+                    nuevoComic.Titulo,
+                    nuevoComic.Autor,
+                    nuevoComic.Descripcion,
+                    nuevoComic.Formato,
+                    nuevoComic.FechaSubida,
+                    nuevoComic.Aprobado
+                }
+            });
+        }
+
+        // PUT: /api/comics/{id}/approve - Aprobar un cómic (Solo Admin)
+        [HttpPut("{id}/approve")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ApproveComic(int id)
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+
+            var comic = await _context.Comics.FindAsync(id);
+            if (comic == null)
+            {
+                return NotFound(new { mensaje = $"No se encontró el cómic con ID {id}." });
+            }
+
+            if (comic.Aprobado)
+            {
+                return BadRequest(new { mensaje = "Este cómic ya está aprobado." });
+            }
+
+            comic.Aprobado = true;
+            comic.FechaAprobacion = DateTime.UtcNow;
+            comic.AprobadoPorId = userId;
+
+            _context.Comics.Update(comic);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { mensaje = $"El cómic '{comic.Titulo}' ha sido aprobado correctamente." });
+        }
+
+        // PUT: /api/comics/{id}/reject - Rechazar un cómic (Solo Admin)
+        [HttpDelete("{id}/reject")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> RejectComic(int id)
+        {
+            var comic = await _context.Comics.FindAsync(id);
 
             if (comic == null)
+            {
+                return NotFound(new { mensaje = $"No se encontró el cómic con ID {id}." });
+            }
+
+            // Eliminar el archivo físico
+            var filePath = Path.Combine(_environment.WebRootPath, comic.RutaArchivo.TrimStart('/'));
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+
+            _context.Comics.Remove(comic);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { mensaje = $"El cómic con ID {id} ha sido rechazado y eliminado." });
+        }
+
+        // GET: /api/comics/download/{id} - Descargar un cómic
+        [HttpGet("download/{id}")]
+        [Authorize]
+        public async Task<IActionResult> DownloadComic(int id)
+        {
+            var comic = await _context.Comics.FindAsync(id);
+
+            if (comic == null || !comic.Aprobado)
             {
                 return NotFound(new { mensaje = $"No se encontró el cómic con ID {id}." });
             }
@@ -57,16 +285,19 @@ namespace ComicReaderBackend.Controllers{
             }
 
             var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            var contentType = "application/octet-stream"; // Tipo genérico, puedes mejorarlo según el formato
+            var contentType = "application/octet-stream";
 
             return File(fileStream, contentType, Path.GetFileName(filePath));
         }
+
+        // GET: /api/comics/view/{id} - Ver un cómic
         [HttpGet("view/{id}")]
+        [Authorize]
         public async Task<IActionResult> ViewComic(int id)
         {
-            var comic = await _context.comics.FindAsync(id);
+            var comic = await _context.Comics.FindAsync(id);
 
-            if (comic == null)
+            if (comic == null || !comic.Aprobado)
             {
                 return NotFound(new { mensaje = $"No se encontró el cómic con ID {id}." });
             }
@@ -85,19 +316,21 @@ namespace ComicReaderBackend.Controllers{
                 ".jpg" or ".jpeg" => "image/jpeg",
                 ".png" => "image/png",
                 ".cbz" => "application/vnd.comicbook+zip",
-                _ => "application/octet-stream" // Para otros formatos desconocidos
+                ".cbr" => "application/vnd.comicbook-rar",
+                _ => "application/octet-stream"
             };
 
             return PhysicalFile(filePath, contentType);
         }
 
-        // Con este endpoint se extraen las paginas de los formatos cbz y cbr, y se almacenan en la carpeta "extracted" dentro de la carpeta "wwwroot".
+        // GET: /api/comics/view/pages/{id} - Extraer y ver páginas de un cómic CBZ/CBR
         [HttpGet("view/pages/{id}")]
+        [Authorize]
         public async Task<IActionResult> ViewComicPages(int id)
         {
-            var comic = await _context.comics.FindAsync(id);
+            var comic = await _context.Comics.FindAsync(id);
 
-            if (comic == null)
+            if (comic == null || !comic.Aprobado)
             {
                 return NotFound(new { mensaje = $"No se encontró el cómic con ID {id}." });
             }
@@ -122,7 +355,7 @@ namespace ComicReaderBackend.Controllers{
                 foreach (var entry in archive.Entries)
                 {
                     var entryPath = Path.Combine(extractPath, entry.Name);
-                    if (!System.IO.File.Exists(entryPath)) // Evitar sobrescribir
+                    if (!System.IO.File.Exists(entryPath))
                     {
                         entry.ExtractToFile(entryPath);
                     }
@@ -131,130 +364,46 @@ namespace ComicReaderBackend.Controllers{
 
             // Obtener las URLs de las imágenes extraídas
             var images = Directory.GetFiles(extractPath)
+                .Where(f => f.EndsWith(".jpg") || f.EndsWith(".jpeg") || f.EndsWith(".png"))
+                .OrderBy(f => f)
                 .Select(img => $"{Request.Scheme}://{Request.Host}/extracted/{comic.Id}/{Path.GetFileName(img)}")
                 .ToList();
 
             return Ok(new { paginas = images });
         }
 
-        // 🔹 POST: /api/comics/upload -> Subir un cómic con archivo
-        [HttpPost("upload")]
-        public async Task<IActionResult> UploadComic(
-            [FromForm] string titulo,
-            [FromForm] string autor,
-            [FromForm] string formato,
-            [FromForm] IFormFile archivo)
-        {
-            if (archivo == null || archivo.Length == 0)
-            {
-                return BadRequest(new { mensaje = "El archivo es obligatorio." });
-            }
-
-            // 🔹 Verificar si el formato es válido
-            var formatosPermitidos = new List<string> { "pdf", "cbz", "jpg", "png", "jpeg" };
-            var extension = Path.GetExtension(archivo.FileName).ToLower().TrimStart('.');
-
-            if (!formatosPermitidos.Contains(extension))
-            {
-                return BadRequest(new { mensaje = "Formato no permitido. Usa PDF, CBZ o imágenes." });
-            }
-
-            // 🔹 Guardar el archivo en el servidor
-            var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads");
-            // 🔹 Verificar si el directorio wwwroot/uploads existe
-            var uploadF = _environment.WebRootPath;
-            if (string.IsNullOrEmpty(uploadF))
-            {
-                uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-            }
-
-            var uploadsPath = Path.Combine(uploadsFolder, "uploads");
-            if (!Directory.Exists(uploadsPath))
-            {
-                Directory.CreateDirectory(uploadsPath);
-            }
-            if (!Directory.Exists(uploadsFolder))
-            {
-                Directory.CreateDirectory(uploadsFolder);
-            }
-
-            var filePath = Path.Combine(uploadsFolder, archivo.FileName);
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await archivo.CopyToAsync(stream);
-            }
-
-            // 🔹 Guardar el cómic en la base de datos
-            var nuevoComic = new Comic
-            {
-                Titulo = titulo,
-                Autor = autor,
-                Formato = formato,
-                RutaArchivo = "/uploads/" + archivo.FileName,
-                FechaSubida = DateTime.UtcNow
-            };
-            if (archivo == null || archivo.Length == 0)
-            {
-                Console.WriteLine("❌ No se recibió el archivo correctamente.");
-                return BadRequest(new { mensaje = "El archivo es obligatorio." });
-            }
-            Console.WriteLine($"✅ Archivo recibido: {archivo.FileName}, Tamaño: {archivo.Length} bytes");
-
-            _context.comics.Add(nuevoComic);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetComics), new { id = nuevoComic.Id }, new
-            {
-                mensaje = "Cómic subido correctamente.",
-                comic = nuevoComic
-            });
-        }
-        // 🔹 PUT: /api/comics/{id} -> Actualizar un cómic por su ID
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateComic(int id, [FromBody] Comic comicUpdate)
-        {
-            if (comicUpdate == null)
-            {
-                return BadRequest(new { mensaje = "Los datos enviados no son válidos." });
-            }
-
-            var comic = await _context.comics.FindAsync(id);
-            if (comic == null)
-            {
-                return NotFound(new { mensaje = $"No se encontró el cómic con ID {id}." });
-            }
-
-            // Actualizar solo los campos enviados en el JSON
-            if (!string.IsNullOrEmpty(comicUpdate.Titulo)) comic.Titulo = comicUpdate.Titulo;
-            if (!string.IsNullOrEmpty(comicUpdate.Autor)) comic.Autor = comicUpdate.Autor;
-            if (!string.IsNullOrEmpty(comicUpdate.Formato)) comic.Formato = comicUpdate.Formato;
-            if (!string.IsNullOrEmpty(comicUpdate.RutaArchivo)) comic.RutaArchivo = comicUpdate.RutaArchivo;
-
-            _context.comics.Update(comic);
-            await _context.SaveChangesAsync();
-
-            return Ok(new { mensaje = $"El cómic con ID {id} ha sido actualizado correctamente." });
-        }
-
-        // 🔹 DELETE : /api/comics/{id} -> Borra un cómic por su ID
+        // DELETE: /api/comics/{id} - Eliminar un cómic (Solo Admin o el usuario que lo subió)
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteComic(int id)
         {
-            var comic = await _context.comics.FindAsync(id);
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+            var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
+
+            var comic = await _context.Comics.FindAsync(id);
 
             if (comic == null)
             {
                 return NotFound(new { mensaje = $"No se encontró el cómic con ID {id}." });
             }
 
-            _context.comics.Remove(comic);
+            // Solo el admin o el usuario que subió el comic puede eliminarlo
+            if (userRole != "Admin" && comic.SubidoPorId != userId)
+            {
+                return Forbid();
+            }
+
+            // Eliminar el archivo físico
+            var filePath = Path.Combine(_environment.WebRootPath, comic.RutaArchivo.TrimStart('/'));
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+
+            _context.Comics.Remove(comic);
             await _context.SaveChangesAsync();
 
             return Ok(new { mensaje = $"El cómic con ID {id} ha sido eliminado correctamente." });
         }
-
     }
 }
-
-
-// Ya con esto podemos probar nuestra API en el navegador con la ruta http://localhost:5115/api/comics con postman
