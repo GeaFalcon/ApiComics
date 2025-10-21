@@ -2,6 +2,45 @@
 
 Plataforma web completa para lectura y gestión de comics, desarrollada con **ASP.NET Core 8.0** y **React 18**.
 
+## 🚀 Inicio Rápido
+
+### Opción 1: Docker (Recomendado - Un Solo Comando)
+
+```bash
+docker-compose up --build
+```
+
+Accede a http://localhost:5000 y usa:
+- **Usuario:** admin
+- **Contraseña:** Admin123!
+
+### Opción 2: Script de Inicio
+
+**Linux/Mac:**
+```bash
+./start.sh
+```
+
+**Windows:**
+```powershell
+.\start.ps1
+```
+
+### Opción 3: Ejecutar Directamente
+
+```bash
+dotnet run
+```
+
+> **Nota:** Con cualquier opción, la aplicación automáticamente:
+> - ✅ Aplica migraciones de base de datos
+> - ✅ Crea usuario administrador por defecto
+> - ✅ Configura todo lo necesario
+>
+> Ver [INICIO-RAPIDO.md](INICIO-RAPIDO.md) para más detalles.
+
+---
+
 ## Características Principales
 
 ### Funcionalidades de Usuario
