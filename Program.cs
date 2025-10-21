@@ -70,6 +70,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IWebHostEnvironment>(builder.Environment);
 
 var app = builder.Build();
+
+// 🔹 Inicializar base de datos automáticamente (migraciones + usuario admin)
+await DbInitializer.InitializeAsync(app.Services);
+
 var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
 if (!Directory.Exists(wwwrootPath))
 {

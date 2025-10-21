@@ -1,0 +1,13 @@
+**/.git
+**/.gitignore
+**/.vscode
+**/bin
+**/obj
+**/.vs
+**/Migrations
+**/wwwroot/uploads/*
+!**/wwwroot/uploads/.gitkeep
+**/wwwroot/extracted
+*.md
+docker-compose.yml
+.env
