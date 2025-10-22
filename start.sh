@@ -4,7 +4,19 @@ echo "🚀 Iniciando Comic Reader Platform..."
 echo ""
 
 # Verificar si Docker está disponible
-if command -v docker &> /dev/null && command -v docker-compose &> /dev/null; then
+DOCKER_COMPOSE_CMD=""
+
+if command -v docker &> /dev/null; then
+    # Probar 'docker compose' (nuevo)
+    if docker compose version &> /dev/null; then
+        DOCKER_COMPOSE_CMD="docker compose"
+    # Probar 'docker-compose' (antiguo)
+    elif command -v docker-compose &> /dev/null; then
+        DOCKER_COMPOSE_CMD="docker-compose"
+    fi
+fi
+
+if [ -n "$DOCKER_COMPOSE_CMD" ]; then
     echo "🐳 Docker detectado. ¿Deseas usar Docker? (Recomendado)"
     echo "1) Sí - Usar Docker (automático, incluye PostgreSQL)"
     echo "2) No - Ejecutar localmente (requiere PostgreSQL instalado)"
@@ -12,14 +24,14 @@ if command -v docker &> /dev/null && command -v docker-compose &> /dev/null; the
 
     if [ "$choice" = "1" ]; then
         echo ""
-        echo "🐳 Iniciando con Docker Compose..."
+        echo "🐳 Iniciando con Docker..."
         echo "📦 Esto creará automáticamente:"
         echo "   - Base de datos PostgreSQL"
         echo "   - Aplicación ASP.NET Core"
         echo "   - Usuario admin por defecto (admin / Admin123!)"
         echo ""
 
-        docker-compose up --build
+        $DOCKER_COMPOSE_CMD up --build
         exit 0
     fi
 fi

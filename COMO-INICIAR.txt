@@ -16,7 +16,9 @@
 
   3️⃣  Ejecuta:
 
-      docker-compose up --build
+      docker compose up --build
+
+      (Nota: es "docker compose" con espacio, no "docker-compose")
 
   4️⃣  Espera a que termine (primera vez tarda más)
 
@@ -110,7 +112,7 @@
       Presiona Ctrl+C en la terminal
 
       O ejecuta:
-      docker-compose down
+      docker compose down
 
   Sin Docker:
       Presiona Ctrl+C en la terminal

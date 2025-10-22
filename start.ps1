@@ -5,9 +5,24 @@ Write-Host ""
 
 # Verificar si Docker está disponible
 $dockerAvailable = Get-Command docker -ErrorAction SilentlyContinue
-$dockerComposeAvailable = Get-Command docker-compose -ErrorAction SilentlyContinue
 
-if ($dockerAvailable -and $dockerComposeAvailable) {
+if ($dockerAvailable) {
+    # Probar docker compose (nuevo) o docker-compose (antiguo)
+    $composeCommand = "docker compose"
+    $testCompose = docker compose version 2>$null
+    if (-not $testCompose) {
+        $composeCommand = "docker-compose"
+        $testComposeOld = Get-Command docker-compose -ErrorAction SilentlyContinue
+        if (-not $testComposeOld) {
+            Write-Host "⚠️  Docker está instalado pero Docker Compose no está disponible" -ForegroundColor Yellow
+            Write-Host "   Instala Docker Desktop desde: https://www.docker.com/products/docker-desktop" -ForegroundColor Yellow
+            Write-Host ""
+            $dockerAvailable = $false
+        }
+    }
+}
+
+if ($dockerAvailable) {
     Write-Host "🐳 Docker detectado. ¿Deseas usar Docker? (Recomendado)" -ForegroundColor Yellow
     Write-Host "1) Sí - Usar Docker (automático, incluye PostgreSQL)"
     Write-Host "2) No - Ejecutar localmente (requiere PostgreSQL instalado)"
@@ -15,14 +30,14 @@ if ($dockerAvailable -and $dockerComposeAvailable) {
 
     if ($choice -eq "1") {
         Write-Host ""
-        Write-Host "🐳 Iniciando con Docker Compose..." -ForegroundColor Cyan
+        Write-Host "🐳 Iniciando con Docker..." -ForegroundColor Cyan
         Write-Host "📦 Esto creará automáticamente:" -ForegroundColor Green
         Write-Host "   - Base de datos PostgreSQL"
         Write-Host "   - Aplicación ASP.NET Core"
         Write-Host "   - Usuario admin por defecto (admin / Admin123!)"
         Write-Host ""
 
-        docker-compose up --build
+        Invoke-Expression "$composeCommand up --build"
         exit 0
     }
 }

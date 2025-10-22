@@ -15,10 +15,29 @@ namespace ComicReaderBackend.Data
             {
                 logger.LogInformation("🔄 Iniciando configuración de base de datos...");
 
-                // Aplicar migraciones automáticamente
-                logger.LogInformation("📦 Aplicando migraciones...");
-                await context.Database.MigrateAsync();
-                logger.LogInformation("✅ Migraciones aplicadas correctamente");
+                // Verificar si hay migraciones pendientes
+                var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
+                var hasMigrations = (await context.Database.GetMigrationsAsync()).Any();
+
+                if (hasMigrations)
+                {
+                    logger.LogInformation("📦 Aplicando migraciones...");
+                    await context.Database.MigrateAsync();
+                    logger.LogInformation("✅ Migraciones aplicadas correctamente");
+                }
+                else
+                {
+                    logger.LogInformation("📦 No se encontraron migraciones. Usando EnsureCreated...");
+                    var created = await context.Database.EnsureCreatedAsync();
+                    if (created)
+                    {
+                        logger.LogInformation("✅ Base de datos y tablas creadas correctamente");
+                    }
+                    else
+                    {
+                        logger.LogInformation("ℹ️  La base de datos ya existe");
+                    }
+                }
 
                 // Crear usuario administrador por defecto si no existe
                 await CreateDefaultAdminAsync(context, logger);
@@ -38,33 +57,41 @@ namespace ComicReaderBackend.Data
             const string defaultAdminEmail = "admin@comicreader.com";
             const string defaultAdminPassword = "Admin123!";
 
-            var adminExists = await context.Users.AnyAsync(u => u.Role == "Admin");
-
-            if (!adminExists)
+            try
             {
-                logger.LogInformation("👤 Creando usuario administrador por defecto...");
+                var adminExists = await context.Users.AnyAsync(u => u.Role == "Admin");
 
-                var adminUser = new User
+                if (!adminExists)
                 {
-                    Username = defaultAdminUsername,
-                    Email = defaultAdminEmail,
-                    PasswordHash = BCrypt.Net.BCrypt.HashPassword(defaultAdminPassword),
-                    Role = "Admin",
-                    FechaRegistro = DateTime.UtcNow
-                };
+                    logger.LogInformation("👤 Creando usuario administrador por defecto...");
 
-                context.Users.Add(adminUser);
-                await context.SaveChangesAsync();
+                    var adminUser = new User
+                    {
+                        Username = defaultAdminUsername,
+                        Email = defaultAdminEmail,
+                        PasswordHash = BCrypt.Net.BCrypt.HashPassword(defaultAdminPassword),
+                        Role = "Admin",
+                        FechaRegistro = DateTime.UtcNow
+                    };
 
-                logger.LogInformation("✅ Usuario administrador creado:");
-                logger.LogInformation($"   👤 Usuario: {defaultAdminUsername}");
-                logger.LogInformation($"   📧 Email: {defaultAdminEmail}");
-                logger.LogInformation($"   🔑 Contraseña: {defaultAdminPassword}");
-                logger.LogWarning("⚠️  IMPORTANTE: Cambia la contraseña del administrador después del primer inicio de sesión");
+                    context.Users.Add(adminUser);
+                    await context.SaveChangesAsync();
+
+                    logger.LogInformation("✅ Usuario administrador creado:");
+                    logger.LogInformation($"   👤 Usuario: {defaultAdminUsername}");
+                    logger.LogInformation($"   📧 Email: {defaultAdminEmail}");
+                    logger.LogInformation($"   🔑 Contraseña: {defaultAdminPassword}");
+                    logger.LogWarning("⚠️  IMPORTANTE: Cambia la contraseña del administrador después del primer inicio de sesión");
+                }
+                else
+                {
+                    logger.LogInformation("ℹ️  Usuario administrador ya existe, omitiendo creación");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                logger.LogInformation("ℹ️  Usuario administrador ya existe, omitiendo creación");
+                logger.LogError(ex, "❌ Error al crear usuario administrador");
+                throw;
             }
         }
     }
