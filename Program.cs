@@ -67,17 +67,29 @@ builder.Services.AddControllers();
 // Configurar Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<IWebHostEnvironment>(builder.Environment);
 
 var app = builder.Build();
 
 // 🔹 Inicializar base de datos automáticamente (migraciones + usuario admin)
 await DbInitializer.InitializeAsync(app.Services);
 
+// 🔹 Asegurar que wwwroot y subdirectorios existen
 var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
 if (!Directory.Exists(wwwrootPath))
 {
     Directory.CreateDirectory(wwwrootPath);
+}
+
+var uploadsPath = Path.Combine(wwwrootPath, "uploads");
+if (!Directory.Exists(uploadsPath))
+{
+    Directory.CreateDirectory(uploadsPath);
+}
+
+var extractedPath = Path.Combine(wwwrootPath, "extracted");
+if (!Directory.Exists(extractedPath))
+{
+    Directory.CreateDirectory(extractedPath);
 }
 
 // 🔹 Configurar el middleware de Swagger solo en desarrollo
@@ -87,10 +99,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Usar CORS antes de otros middleware
-app.UseCors();
-
+// Habilitar archivos estáticos primero
 app.UseStaticFiles();
+
+// Usar CORS después de archivos estáticos
+app.UseCors();
 
 // Habilitar autenticación y autorización
 app.UseAuthentication();
