@@ -15,19 +15,27 @@ namespace ComicReaderBackend.Data
             {
                 logger.LogInformation("🔄 Iniciando configuración de base de datos...");
 
-                // Verificar si hay migraciones pendientes
-                var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
-                var hasMigrations = (await context.Database.GetMigrationsAsync()).Any();
-
-                if (hasMigrations)
+                // Intentar aplicar migraciones si existen, si no, usar EnsureCreated
+                try
                 {
-                    logger.LogInformation("📦 Aplicando migraciones...");
-                    await context.Database.MigrateAsync();
-                    logger.LogInformation("✅ Migraciones aplicadas correctamente");
+                    var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
+                    if (pendingMigrations.Any())
+                    {
+                        logger.LogInformation("📦 Aplicando migraciones pendientes...");
+                        await context.Database.MigrateAsync();
+                        logger.LogInformation("✅ Migraciones aplicadas correctamente");
+                    }
+                    else
+                    {
+                        // Intentar migrar de todas formas (aplica cualquier migración existente)
+                        await context.Database.MigrateAsync();
+                        logger.LogInformation("✅ Base de datos actualizada");
+                    }
                 }
-                else
+                catch (InvalidOperationException)
                 {
-                    logger.LogInformation("📦 No se encontraron migraciones. Usando EnsureCreated...");
+                    // No hay migraciones configuradas, usar EnsureCreated
+                    logger.LogInformation("📦 No hay migraciones configuradas. Usando EnsureCreated...");
                     var created = await context.Database.EnsureCreatedAsync();
                     if (created)
                     {
