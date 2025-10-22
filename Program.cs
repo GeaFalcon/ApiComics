@@ -13,6 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Configurar servicios
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IThumbnailService, ThumbnailService>();
 
 // Configurar JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
@@ -90,6 +91,12 @@ var extractedPath = Path.Combine(wwwrootPath, "extracted");
 if (!Directory.Exists(extractedPath))
 {
     Directory.CreateDirectory(extractedPath);
+}
+
+var thumbnailsPath = Path.Combine(wwwrootPath, "thumbnails");
+if (!Directory.Exists(thumbnailsPath))
+{
+    Directory.CreateDirectory(thumbnailsPath);
 }
 
 // 🔹 Configurar el middleware de Swagger solo en desarrollo
