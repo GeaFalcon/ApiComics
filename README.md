@@ -36,9 +36,9 @@ dotnet run
 ```
 
 > **Nota:** Con cualquier opción, la aplicación automáticamente:
-> - ✅ Aplica migraciones de base de datos
-> - ✅ Crea usuario administrador por defecto
-> - ✅ Configura todo lo necesario
+> - ✅ Crea todas las tablas de base de datos
+> - ✅ Crea usuario administrador por defecto (admin/Admin123!)
+> - ✅ Configura todo lo necesario para empezar a usar la plataforma
 >
 > **📚 Guías de Instalación:**
 > - **¿No tienes nada instalado?** → Ver [INSTALACION-DESDE-CERO.md](INSTALACION-DESDE-CERO.md)
@@ -165,12 +165,13 @@ CREATE DATABASE comicdb;
 
 ### Paso 2: Aplicar Migraciones
 
-Ejecuta los siguientes comandos en la terminal:
+> **Nota:** Si usas Docker, este paso NO es necesario. La aplicación crea automáticamente todas las tablas al iniciar.
+
+Si ejecutas manualmente con `dotnet run`, las tablas se crean automáticamente en el primer inicio. No necesitas ejecutar migraciones manualmente.
+
+Si prefieres usar migraciones de Entity Framework, puedes crear una:
 
 ```bash
-# Eliminar migraciones antiguas (si existen)
-dotnet ef migrations remove --force
-
 # Crear nueva migración
 dotnet ef migrations add InitialMigration
 
@@ -180,7 +181,12 @@ dotnet ef database update
 
 ### Paso 3: Crear Usuario Administrador
 
-Puedes crear el primer usuario administrador de dos formas:
+> **Nota:** La aplicación crea automáticamente un usuario administrador en el primer inicio:
+> - **Usuario:** admin
+> - **Email:** admin@comicreader.com
+> - **Contraseña:** Admin123!
+
+Si prefieres crear tu propio usuario administrador manualmente, puedes hacerlo de estas formas:
 
 #### Opción 1: Usar Swagger/Postman
 
@@ -308,6 +314,8 @@ La aplicación estará disponible en:
 - 🔒 Agrega logs de auditoría
 
 ## Solución de Problemas
+
+> **⚠️ Error "relation Users does not exist"?** → Ver [SOLUCION-ERROR-BBDD.md](SOLUCION-ERROR-BBDD.md) para la solución completa
 
 ### Error de Migración
 ```bash
