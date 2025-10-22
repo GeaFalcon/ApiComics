@@ -38,8 +38,8 @@ namespace ComicReaderBackend.Controllers
                     c.Descripcion,
                     c.Formato,
                     c.FechaSubida,
-                    SubidoPor = c.SubidoPor!.Username,
-                    TotalVotos = c.Votos!.Count
+                    SubidoPor = c.SubidoPor != null ? c.SubidoPor.Username : "Unknown",
+                    TotalVotos = c.Votos != null ? c.Votos.Count : 0
                 })
                 .OrderByDescending(c => c.FechaSubida)
                 .ToListAsync();
@@ -63,7 +63,7 @@ namespace ComicReaderBackend.Controllers
                     c.Descripcion,
                     c.Formato,
                     c.FechaSubida,
-                    SubidoPor = c.SubidoPor!.Username,
+                    SubidoPor = c.SubidoPor != null ? c.SubidoPor.Username : "Unknown",
                     SubidoPorId = c.SubidoPorId
                 })
                 .OrderBy(c => c.FechaSubida)
@@ -92,7 +92,7 @@ namespace ComicReaderBackend.Controllers
                     c.FechaSubida,
                     c.Aprobado,
                     c.FechaAprobacion,
-                    TotalVotos = c.Votos!.Count
+                    TotalVotos = c.Votos != null ? c.Votos.Count : 0
                 })
                 .OrderByDescending(c => c.FechaSubida)
                 .ToListAsync();
@@ -133,8 +133,8 @@ namespace ComicReaderBackend.Controllers
                 comic.Formato,
                 comic.FechaSubida,
                 comic.Aprobado,
-                SubidoPor = comic.SubidoPor!.Username,
-                TotalVotos = comic.Votos!.Count,
+                SubidoPor = comic.SubidoPor?.Username ?? "Unknown",
+                TotalVotos = comic.Votos?.Count ?? 0,
                 comic.RutaArchivo
             });
         }
