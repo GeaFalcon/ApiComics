@@ -88,6 +88,7 @@ namespace ComicReaderBackend.Controllers
                     .ThenInclude(c => c!.Votos)
                 .Include(f => f.Comic)
                     .ThenInclude(c => c!.SubidoPor)
+                .Where(f => f.Comic != null)
                 .OrderByDescending(f => f.FechaAgregado)
                 .Select(f => new
                 {
@@ -101,8 +102,8 @@ namespace ComicReaderBackend.Controllers
                         f.Comic.Descripcion,
                         f.Comic.Formato,
                         f.Comic.FechaSubida,
-                        subidoPor = f.Comic.SubidoPor!.Username,
-                        totalVotos = f.Comic.Votos!.Count
+                        subidoPor = f.Comic.SubidoPor != null ? f.Comic.SubidoPor.Username : "Unknown",
+                        totalVotos = f.Comic.Votos != null ? f.Comic.Votos.Count : 0
                     }
                 })
                 .ToListAsync();
@@ -193,6 +194,7 @@ namespace ComicReaderBackend.Controllers
                     .ThenInclude(c => c!.SubidoPor)
                 .Include(v => v.Comic)
                     .ThenInclude(c => c!.Votos)
+                .Where(v => v.Comic != null)
                 .OrderByDescending(v => v.FechaVoto)
                 .Select(v => new
                 {
@@ -206,8 +208,8 @@ namespace ComicReaderBackend.Controllers
                         v.Comic.Descripcion,
                         v.Comic.Formato,
                         v.Comic.FechaSubida,
-                        subidoPor = v.Comic.SubidoPor!.Username,
-                        totalVotos = v.Comic.Votos!.Count
+                        subidoPor = v.Comic.SubidoPor != null ? v.Comic.SubidoPor.Username : "Unknown",
+                        totalVotos = v.Comic.Votos != null ? v.Comic.Votos.Count : 0
                     }
                 })
                 .ToListAsync();
@@ -286,6 +288,7 @@ namespace ComicReaderBackend.Controllers
                     .ThenInclude(c => c!.SubidoPor)
                 .Include(h => h.Comic)
                     .ThenInclude(c => c!.Votos)
+                .Where(h => h.Comic != null)
                 .OrderByDescending(h => h.FechaLectura)
                 .Select(h => new
                 {
@@ -300,8 +303,8 @@ namespace ComicReaderBackend.Controllers
                         h.Comic.Descripcion,
                         h.Comic.Formato,
                         h.Comic.FechaSubida,
-                        subidoPor = h.Comic.SubidoPor!.Username,
-                        totalVotos = h.Comic.Votos!.Count
+                        subidoPor = h.Comic.SubidoPor != null ? h.Comic.SubidoPor.Username : "Unknown",
+                        totalVotos = h.Comic.Votos != null ? h.Comic.Votos.Count : 0
                     }
                 })
                 .ToListAsync();

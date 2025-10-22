@@ -165,6 +165,12 @@ namespace ComicReaderBackend.Controllers
                 return BadRequest(new { mensaje = "Formato no permitido. Usa PDF, CBZ, CBR o imágenes." });
             }
 
+            // Verificar WebRootPath
+            if (string.IsNullOrEmpty(_environment.WebRootPath))
+            {
+                return StatusCode(500, new { mensaje = "Error de configuración: WebRootPath no está configurado." });
+            }
+
             // Guardar archivo
             var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads");
             if (!Directory.Exists(uploadsFolder))
@@ -175,9 +181,16 @@ namespace ComicReaderBackend.Controllers
             var fileName = $"{Guid.NewGuid()}_{uploadDto.Archivo.FileName}";
             var filePath = Path.Combine(uploadsFolder, fileName);
 
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            try
             {
-                await uploadDto.Archivo.CopyToAsync(stream);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await uploadDto.Archivo.CopyToAsync(stream);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = $"Error al guardar el archivo: {ex.Message}" });
             }
 
             // Crear el comic en la base de datos
@@ -253,10 +266,21 @@ namespace ComicReaderBackend.Controllers
             }
 
             // Eliminar el archivo físico
-            var filePath = Path.Combine(_environment.WebRootPath, comic.RutaArchivo.TrimStart('/'));
-            if (System.IO.File.Exists(filePath))
+            if (!string.IsNullOrEmpty(_environment.WebRootPath))
             {
-                System.IO.File.Delete(filePath);
+                var filePath = Path.Combine(_environment.WebRootPath, comic.RutaArchivo.TrimStart('/'));
+                if (System.IO.File.Exists(filePath))
+                {
+                    try
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log pero continúa con la eliminación de la base de datos
+                        Console.WriteLine($"Error al eliminar archivo físico: {ex.Message}");
+                    }
+                }
             }
 
             _context.Comics.Remove(comic);
@@ -275,6 +299,11 @@ namespace ComicReaderBackend.Controllers
             if (comic == null || !comic.Aprobado)
             {
                 return NotFound(new { mensaje = $"No se encontró el cómic con ID {id}." });
+            }
+
+            if (string.IsNullOrEmpty(_environment.WebRootPath))
+            {
+                return StatusCode(500, new { mensaje = "Error de configuración: WebRootPath no está configurado." });
             }
 
             var filePath = Path.Combine(_environment.WebRootPath, comic.RutaArchivo.TrimStart('/'));
@@ -300,6 +329,11 @@ namespace ComicReaderBackend.Controllers
             if (comic == null || !comic.Aprobado)
             {
                 return NotFound(new { mensaje = $"No se encontró el cómic con ID {id}." });
+            }
+
+            if (string.IsNullOrEmpty(_environment.WebRootPath))
+            {
+                return StatusCode(500, new { mensaje = "Error de configuración: WebRootPath no está configurado." });
             }
 
             var filePath = Path.Combine(_environment.WebRootPath, comic.RutaArchivo.TrimStart('/'));
@@ -335,6 +369,11 @@ namespace ComicReaderBackend.Controllers
                 return NotFound(new { mensaje = $"No se encontró el cómic con ID {id}." });
             }
 
+            if (string.IsNullOrEmpty(_environment.WebRootPath))
+            {
+                return StatusCode(500, new { mensaje = "Error de configuración: WebRootPath no está configurado." });
+            }
+
             var filePath = Path.Combine(_environment.WebRootPath, comic.RutaArchivo.TrimStart('/'));
 
             if (!System.IO.File.Exists(filePath))
@@ -349,17 +388,26 @@ namespace ComicReaderBackend.Controllers
                 Directory.CreateDirectory(extractPath);
             }
 
-            // Extraer las imágenes del CBZ (ZIP)
-            using (var archive = ZipFile.OpenRead(filePath))
+            try
             {
-                foreach (var entry in archive.Entries)
+                // Extraer las imágenes del CBZ (ZIP)
+                using (var archive = ZipFile.OpenRead(filePath))
                 {
-                    var entryPath = Path.Combine(extractPath, entry.Name);
-                    if (!System.IO.File.Exists(entryPath))
+                    foreach (var entry in archive.Entries)
                     {
-                        entry.ExtractToFile(entryPath);
+                        if (string.IsNullOrEmpty(entry.Name)) continue;
+
+                        var entryPath = Path.Combine(extractPath, entry.Name);
+                        if (!System.IO.File.Exists(entryPath))
+                        {
+                            entry.ExtractToFile(entryPath);
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = $"Error al extraer el archivo: {ex.Message}" });
             }
 
             // Obtener las URLs de las imágenes extraídas
@@ -394,10 +442,21 @@ namespace ComicReaderBackend.Controllers
             }
 
             // Eliminar el archivo físico
-            var filePath = Path.Combine(_environment.WebRootPath, comic.RutaArchivo.TrimStart('/'));
-            if (System.IO.File.Exists(filePath))
+            if (!string.IsNullOrEmpty(_environment.WebRootPath))
             {
-                System.IO.File.Delete(filePath);
+                var filePath = Path.Combine(_environment.WebRootPath, comic.RutaArchivo.TrimStart('/'));
+                if (System.IO.File.Exists(filePath))
+                {
+                    try
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log pero continúa con la eliminación de la base de datos
+                        Console.WriteLine($"Error al eliminar archivo físico: {ex.Message}");
+                    }
+                }
             }
 
             _context.Comics.Remove(comic);
