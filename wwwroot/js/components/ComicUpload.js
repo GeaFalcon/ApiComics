@@ -90,6 +90,20 @@ function ComicUpload({ onNavigate }) {
         }
 
         try {
+            console.log('=== INICIANDO SUBIDA DE COMIC ===');
+            console.log('Datos del formulario:', {
+                titulo: formData.titulo,
+                autor: formData.autor,
+                descripcion: formData.descripcion,
+                tieneDescripcion: !!formData.descripcion.trim()
+            });
+            console.log('Archivo seleccionado:', {
+                nombre: file.name,
+                tipo: file.type,
+                tamaño: file.size,
+                tamañoMB: (file.size / 1024 / 1024).toFixed(2)
+            });
+
             const formDataToSend = new FormData();
             formDataToSend.append('titulo', formData.titulo.trim());
             formDataToSend.append('autor', formData.autor.trim());
@@ -98,7 +112,21 @@ function ComicUpload({ onNavigate }) {
             }
             formDataToSend.append('archivo', file);
 
+            console.log('FormData creado. Campos incluidos:');
+            for (let pair of formDataToSend.entries()) {
+                if (pair[0] === 'archivo') {
+                    console.log(`  ${pair[0]}:`, pair[1].name, `(${pair[1].type})`);
+                } else {
+                    console.log(`  ${pair[0]}:`, pair[1]);
+                }
+            }
+
+            console.log('Enviando a:', API_ENDPOINTS.COMICS_UPLOAD);
+            console.log('Llamando a API.postFormData...');
+
             const response = await API.postFormData(API_ENDPOINTS.COMICS_UPLOAD, formDataToSend);
+
+            console.log('✅ Respuesta exitosa:', response);
             setSuccess(response.mensaje || 'Comic subido correctamente. Está pendiente de aprobación.');
             setFormData({ titulo: '', autor: '', descripcion: '' });
             setFile(null);
@@ -107,8 +135,15 @@ function ComicUpload({ onNavigate }) {
                 onNavigate('profile');
             }, 2000);
         } catch (err) {
+            console.error('❌ ERROR AL SUBIR COMIC ❌');
+            console.error('Tipo de error:', err.constructor.name);
+            console.error('Mensaje:', err.message);
+            console.error('Error completo:', err);
+            if (err.response) {
+                console.error('Response status:', err.response.status);
+                console.error('Response data:', err.response.data);
+            }
             setError(err.message || 'Error al subir el comic');
-            console.error('Error al subir:', err);
         } finally {
             setLoading(false);
         }

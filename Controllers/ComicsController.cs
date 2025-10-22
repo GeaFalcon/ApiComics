@@ -144,24 +144,53 @@ namespace ComicReaderBackend.Controllers
         [Authorize]
         public async Task<IActionResult> UploadComic([FromForm] ComicUploadDto uploadDto)
         {
+            _logger.LogInformation("=== RECIBIENDO PETICIÓN DE SUBIDA DE COMIC ===");
+            _logger.LogInformation("Usuario autenticado: {User}", User.Identity?.Name ?? "Unknown");
+            _logger.LogInformation("ModelState.IsValid: {IsValid}", ModelState.IsValid);
+
             if (!ModelState.IsValid)
             {
+                _logger.LogError("❌ ModelState inválido. Errores:");
+                foreach (var error in ModelState)
+                {
+                    foreach (var subError in error.Value.Errors)
+                    {
+                        _logger.LogError("  Campo '{Field}': {Error}", error.Key, subError.ErrorMessage);
+                    }
+                }
                 return BadRequest(ModelState);
+            }
+
+            _logger.LogInformation("Datos recibidos:");
+            _logger.LogInformation("  Titulo: {Titulo}", uploadDto.Titulo ?? "(null)");
+            _logger.LogInformation("  Autor: {Autor}", uploadDto.Autor ?? "(null)");
+            _logger.LogInformation("  Descripcion: {Descripcion}", uploadDto.Descripcion ?? "(null)");
+            _logger.LogInformation("  Formato: {Formato}", uploadDto.Formato ?? "(null)");
+            _logger.LogInformation("  Archivo: {Archivo}", uploadDto.Archivo?.FileName ?? "(null)");
+            if (uploadDto.Archivo != null)
+            {
+                _logger.LogInformation("  Archivo.Length: {Length} bytes ({MB} MB)",
+                    uploadDto.Archivo.Length,
+                    (uploadDto.Archivo.Length / 1024.0 / 1024.0).ToString("F2"));
+                _logger.LogInformation("  Archivo.ContentType: {ContentType}", uploadDto.Archivo.ContentType);
             }
 
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
 
             if (uploadDto.Archivo == null || uploadDto.Archivo.Length == 0)
             {
+                _logger.LogError("❌ Archivo no proporcionado o vacío");
                 return BadRequest(new { mensaje = "El archivo es obligatorio." });
             }
 
             // Detectar formato automáticamente desde la extensión del archivo
             var formatosPermitidos = new List<string> { "pdf", "cbz", "cbr", "jpg", "png", "jpeg" };
             var extension = Path.GetExtension(uploadDto.Archivo.FileName).ToLower().TrimStart('.');
+            _logger.LogInformation("Extensión detectada: {Extension}", extension);
 
             if (!formatosPermitidos.Contains(extension))
             {
+                _logger.LogError("❌ Formato no permitido: {Extension}", extension);
                 return BadRequest(new { mensaje = "Formato no permitido. Usa PDF, CBZ, CBR o imágenes (JPG, PNG)." });
             }
 
@@ -176,20 +205,32 @@ namespace ComicReaderBackend.Controllers
                 "PNG" => "PNG",
                 _ => extension.ToUpper()
             };
+            _logger.LogInformation("Formato detectado: {Formato}", formatoDetectado);
 
             // Guardar archivo
             var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads");
             if (!Directory.Exists(uploadsFolder))
             {
+                _logger.LogInformation("Creando carpeta uploads: {Path}", uploadsFolder);
                 Directory.CreateDirectory(uploadsFolder);
             }
 
             var fileName = $"{Guid.NewGuid()}_{uploadDto.Archivo.FileName}";
             var filePath = Path.Combine(uploadsFolder, fileName);
+            _logger.LogInformation("Guardando archivo en: {Path}", filePath);
 
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            try
             {
-                await uploadDto.Archivo.CopyToAsync(stream);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await uploadDto.Archivo.CopyToAsync(stream);
+                }
+                _logger.LogInformation("✅ Archivo guardado exitosamente");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "❌ Error al guardar archivo físico");
+                throw;
             }
 
             // Crear el comic en la base de datos con formato autodetectado
@@ -205,8 +246,10 @@ namespace ComicReaderBackend.Controllers
                 Aprobado = false // Los comics necesitan aprobación de un admin
             };
 
+            _logger.LogInformation("Guardando comic en base de datos...");
             _context.Comics.Add(nuevoComic);
             await _context.SaveChangesAsync();
+            _logger.LogInformation("✅ Comic guardado en BD con ID: {Id}", nuevoComic.Id);
 
             return Ok(new
             {
