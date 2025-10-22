@@ -26,6 +26,9 @@ namespace ComicReaderBackend.Models
         [Required(ErrorMessage = "La ruta del archivo es obligatoria.")]
         public string RutaArchivo { get; set; } = "wwwroot/uploads/";
 
+        [MaxLength(500)]
+        public string? RutaMiniatura { get; set; }
+
         public DateTime FechaSubida { get; set; } = DateTime.UtcNow;
 
         // Estado de aprobación

@@ -49,12 +49,58 @@ namespace ComicReaderBackend.Data
                 // Crear usuario administrador por defecto si no existe
                 await CreateDefaultAdminAsync(context, logger);
 
+                // Aplicar ajustes al esquema si es necesario (para bases de datos creadas con EnsureCreated)
+                await ApplySchemaFixesAsync(context, logger);
+
                 logger.LogInformation("✅ Base de datos configurada correctamente");
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "❌ Error al inicializar la base de datos");
                 throw;
+            }
+        }
+
+        private static async Task ApplySchemaFixesAsync(ApplicationDbContext context, ILogger logger)
+        {
+            try
+            {
+                // Verificar si la columna RutaMiniatura existe en la tabla Comics
+                var connectionString = context.Database.GetConnectionString();
+                await using var connection = context.Database.GetDbConnection();
+                await connection.OpenAsync();
+
+                await using var command = connection.CreateCommand();
+                command.CommandText = @"
+                    SELECT COUNT(*)
+                    FROM information_schema.columns
+                    WHERE table_name = 'Comics'
+                    AND column_name = 'RutaMiniatura';";
+
+                var result = await command.ExecuteScalarAsync();
+                var columnExists = Convert.ToInt32(result) > 0;
+
+                if (!columnExists)
+                {
+                    logger.LogInformation("📦 Agregando columna RutaMiniatura a la tabla Comics...");
+
+                    await using var alterCommand = connection.CreateCommand();
+                    alterCommand.CommandText = @"
+                        ALTER TABLE ""Comics""
+                        ADD COLUMN ""RutaMiniatura"" character varying(500) NULL;";
+
+                    await alterCommand.ExecuteNonQueryAsync();
+                    logger.LogInformation("✅ Columna RutaMiniatura agregada correctamente");
+                }
+                else
+                {
+                    logger.LogInformation("ℹ️  La columna RutaMiniatura ya existe en la tabla Comics");
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogWarning(ex, "⚠️  No se pudo verificar/agregar la columna RutaMiniatura (puede que ya exista o la tabla no exista aún)");
+                // No lanzamos excepción porque esto no debe detener la inicialización
             }
         }
 

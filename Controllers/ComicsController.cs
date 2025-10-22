@@ -1,6 +1,7 @@
 using ComicReaderBackend.Data;
 using ComicReaderBackend.Models;
 using ComicReaderBackend.DTOs;
+using ComicReaderBackend.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
@@ -15,11 +16,15 @@ namespace ComicReaderBackend.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _environment;
+        private readonly ILogger<ComicsController> _logger;
+        private readonly IThumbnailService _thumbnailService;
 
-        public ComicsController(ApplicationDbContext context, IWebHostEnvironment environment)
+        public ComicsController(ApplicationDbContext context, IWebHostEnvironment environment, ILogger<ComicsController> logger, IThumbnailService thumbnailService)
         {
             _context = context;
             _environment = environment;
+            _logger = logger;
+            _thumbnailService = thumbnailService;
         }
 
         // GET: /api/comics - Obtener todos los cómics aprobados
@@ -37,6 +42,7 @@ namespace ComicReaderBackend.Controllers
                     c.Autor,
                     c.Descripcion,
                     c.Formato,
+                    c.RutaMiniatura,
                     c.FechaSubida,
                     SubidoPor = c.SubidoPor != null ? c.SubidoPor.Username : "Unknown",
                     TotalVotos = c.Votos != null ? c.Votos.Count : 0
@@ -62,6 +68,7 @@ namespace ComicReaderBackend.Controllers
                     c.Autor,
                     c.Descripcion,
                     c.Formato,
+                    c.RutaMiniatura,
                     c.FechaSubida,
                     SubidoPor = c.SubidoPor != null ? c.SubidoPor.Username : "Unknown",
                     SubidoPorId = c.SubidoPorId
@@ -89,6 +96,7 @@ namespace ComicReaderBackend.Controllers
                     c.Autor,
                     c.Descripcion,
                     c.Formato,
+                    c.RutaMiniatura,
                     c.FechaSubida,
                     c.Aprobado,
                     c.FechaAprobacion,
@@ -131,6 +139,7 @@ namespace ComicReaderBackend.Controllers
                 comic.Autor,
                 comic.Descripcion,
                 comic.Formato,
+                comic.RutaMiniatura,
                 comic.FechaSubida,
                 comic.Aprobado,
                 SubidoPor = comic.SubidoPor?.Username ?? "Unknown",
@@ -142,28 +151,72 @@ namespace ComicReaderBackend.Controllers
         // POST: /api/comics/upload - Subir un nuevo cómic
         [HttpPost("upload")]
         [Authorize]
+        [RequestSizeLimit(200 * 1024 * 1024)] // 200MB
+        [RequestFormLimits(MultipartBodyLengthLimit = 200 * 1024 * 1024)]
         public async Task<IActionResult> UploadComic([FromForm] ComicUploadDto uploadDto)
         {
+            _logger.LogInformation("=== RECIBIENDO PETICIÓN DE SUBIDA DE COMIC ===");
+            _logger.LogInformation("Usuario autenticado: {User}", User.Identity?.Name ?? "Unknown");
+            _logger.LogInformation("ModelState.IsValid: {IsValid}", ModelState.IsValid);
+
             if (!ModelState.IsValid)
             {
+                _logger.LogError("❌ ModelState inválido. Errores:");
+                foreach (var error in ModelState)
+                {
+                    foreach (var subError in error.Value.Errors)
+                    {
+                        _logger.LogError("  Campo '{Field}': {Error}", error.Key, subError.ErrorMessage);
+                    }
+                }
                 return BadRequest(ModelState);
+            }
+
+            _logger.LogInformation("Datos recibidos:");
+            _logger.LogInformation("  Titulo: {Titulo}", uploadDto.Titulo ?? "(null)");
+            _logger.LogInformation("  Autor: {Autor}", uploadDto.Autor ?? "(null)");
+            _logger.LogInformation("  Descripcion: {Descripcion}", uploadDto.Descripcion ?? "(null)");
+            _logger.LogInformation("  Formato: {Formato}", uploadDto.Formato ?? "(null)");
+            _logger.LogInformation("  Archivo: {Archivo}", uploadDto.Archivo?.FileName ?? "(null)");
+            if (uploadDto.Archivo != null)
+            {
+                _logger.LogInformation("  Archivo.Length: {Length} bytes ({MB} MB)",
+                    uploadDto.Archivo.Length,
+                    (uploadDto.Archivo.Length / 1024.0 / 1024.0).ToString("F2"));
+                _logger.LogInformation("  Archivo.ContentType: {ContentType}", uploadDto.Archivo.ContentType);
             }
 
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
 
             if (uploadDto.Archivo == null || uploadDto.Archivo.Length == 0)
             {
+                _logger.LogError("❌ Archivo no proporcionado o vacío");
                 return BadRequest(new { mensaje = "El archivo es obligatorio." });
             }
 
-            // Verificar formato permitido
+            // Detectar formato automáticamente desde la extensión del archivo
             var formatosPermitidos = new List<string> { "pdf", "cbz", "cbr", "jpg", "png", "jpeg" };
             var extension = Path.GetExtension(uploadDto.Archivo.FileName).ToLower().TrimStart('.');
+            _logger.LogInformation("Extensión detectada: {Extension}", extension);
 
             if (!formatosPermitidos.Contains(extension))
             {
-                return BadRequest(new { mensaje = "Formato no permitido. Usa PDF, CBZ, CBR o imágenes." });
+                _logger.LogError("❌ Formato no permitido: {Extension}", extension);
+                return BadRequest(new { mensaje = "Formato no permitido. Usa PDF, CBZ, CBR o imágenes (JPG, PNG)." });
             }
+
+            // Mapear extensión a formato legible
+            var formatoDetectado = extension.ToUpper() switch
+            {
+                "PDF" => "PDF",
+                "CBZ" => "CBZ",
+                "CBR" => "CBR",
+                "JPG" => "JPG",
+                "JPEG" => "JPG",
+                "PNG" => "PNG",
+                _ => extension.ToUpper()
+            };
+            _logger.LogInformation("Formato detectado: {Formato}", formatoDetectado);
 
             // Verificar WebRootPath
             if (string.IsNullOrEmpty(_environment.WebRootPath))
@@ -175,11 +228,13 @@ namespace ComicReaderBackend.Controllers
             var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads");
             if (!Directory.Exists(uploadsFolder))
             {
+                _logger.LogInformation("Creando carpeta uploads: {Path}", uploadsFolder);
                 Directory.CreateDirectory(uploadsFolder);
             }
 
             var fileName = $"{Guid.NewGuid()}_{uploadDto.Archivo.FileName}";
             var filePath = Path.Combine(uploadsFolder, fileName);
+            _logger.LogInformation("Guardando archivo en: {Path}", filePath);
 
             try
             {
@@ -193,21 +248,38 @@ namespace ComicReaderBackend.Controllers
                 return StatusCode(500, new { mensaje = $"Error al guardar el archivo: {ex.Message}" });
             }
 
-            // Crear el comic en la base de datos
+            // Generar miniatura del comic
+            string? rutaMiniatura = null;
+            try
+            {
+                _logger.LogInformation("Generando miniatura...");
+                rutaMiniatura = await _thumbnailService.GenerateThumbnailAsync(filePath, formatoDetectado);
+                _logger.LogInformation("✅ Miniatura generada: {RutaMiniatura}", rutaMiniatura);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "⚠️ No se pudo generar miniatura, continuando sin ella");
+                // No falla la subida si la miniatura falla
+            }
+
+            // Crear el comic en la base de datos con formato autodetectado
             var nuevoComic = new Comic
             {
                 Titulo = uploadDto.Titulo,
                 Autor = uploadDto.Autor,
                 Descripcion = uploadDto.Descripcion,
-                Formato = uploadDto.Formato,
+                Formato = formatoDetectado, // Usar formato autodetectado
                 RutaArchivo = "/uploads/" + fileName,
+                RutaMiniatura = rutaMiniatura,
                 FechaSubida = DateTime.UtcNow,
                 SubidoPorId = userId,
                 Aprobado = false // Los comics necesitan aprobación de un admin
             };
 
+            _logger.LogInformation("Guardando comic en base de datos...");
             _context.Comics.Add(nuevoComic);
             await _context.SaveChangesAsync();
+            _logger.LogInformation("✅ Comic guardado en BD con ID: {Id}", nuevoComic.Id);
 
             return Ok(new
             {
@@ -278,7 +350,24 @@ namespace ComicReaderBackend.Controllers
                     catch (Exception ex)
                     {
                         // Log pero continúa con la eliminación de la base de datos
-                        Console.WriteLine($"Error al eliminar archivo físico: {ex.Message}");
+                        _logger.LogWarning(ex, "Error al eliminar archivo físico: {FilePath}", filePath);
+                    }
+                }
+
+                // Eliminar miniatura si existe
+                if (!string.IsNullOrEmpty(comic.RutaMiniatura))
+                {
+                    var thumbnailPath = Path.Combine(_environment.WebRootPath, comic.RutaMiniatura.TrimStart('/'));
+                    if (System.IO.File.Exists(thumbnailPath))
+                    {
+                        try
+                        {
+                            System.IO.File.Delete(thumbnailPath);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogWarning(ex, "Error al eliminar miniatura: {ThumbnailPath}", thumbnailPath);
+                        }
                     }
                 }
             }
@@ -454,7 +543,24 @@ namespace ComicReaderBackend.Controllers
                     catch (Exception ex)
                     {
                         // Log pero continúa con la eliminación de la base de datos
-                        Console.WriteLine($"Error al eliminar archivo físico: {ex.Message}");
+                        _logger.LogWarning(ex, "Error al eliminar archivo físico: {FilePath}", filePath);
+                    }
+                }
+
+                // Eliminar miniatura si existe
+                if (!string.IsNullOrEmpty(comic.RutaMiniatura))
+                {
+                    var thumbnailPath = Path.Combine(_environment.WebRootPath, comic.RutaMiniatura.TrimStart('/'));
+                    if (System.IO.File.Exists(thumbnailPath))
+                    {
+                        try
+                        {
+                            System.IO.File.Delete(thumbnailPath);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogWarning(ex, "Error al eliminar miniatura: {ThumbnailPath}", thumbnailPath);
+                        }
                     }
                 }
             }
