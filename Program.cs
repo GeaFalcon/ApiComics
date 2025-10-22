@@ -99,6 +99,9 @@ app.UseAuthorization();
 // Mapea automáticamente los controladores para que funcionen las rutas API
 app.MapControllers();
 
+// 🔹 Servir index.html por defecto en la ruta raíz
+app.MapFallbackToFile("index.html");
+
 // 🔹 NO agregar URLs aquí, ya están configuradas en appsettings.json
 // app.Urls.Add("http://0.0.0.0:5000");
 // app.Urls.Add("https://0.0.0.0:5001");
