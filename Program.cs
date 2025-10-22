@@ -13,6 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Configurar servicios
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IThumbnailService, ThumbnailService>();
 
 // Configurar JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");

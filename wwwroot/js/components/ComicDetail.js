@@ -21,7 +21,7 @@ function ComicDetail({ comicId, onNavigate }) {
     };
 
     const handleView = () => {
-        window.open(API_ENDPOINTS.COMIC_VIEW(comicId), '_blank');
+        onNavigate('comic-viewer', { id: comicId });
     };
 
     const handleDownload = () => {

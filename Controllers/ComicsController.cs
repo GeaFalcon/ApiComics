@@ -1,6 +1,7 @@
 using ComicReaderBackend.Data;
 using ComicReaderBackend.Models;
 using ComicReaderBackend.DTOs;
+using ComicReaderBackend.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
@@ -16,12 +17,14 @@ namespace ComicReaderBackend.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _environment;
         private readonly ILogger<ComicsController> _logger;
+        private readonly IThumbnailService _thumbnailService;
 
-        public ComicsController(ApplicationDbContext context, IWebHostEnvironment environment, ILogger<ComicsController> logger)
+        public ComicsController(ApplicationDbContext context, IWebHostEnvironment environment, ILogger<ComicsController> logger, IThumbnailService thumbnailService)
         {
             _context = context;
             _environment = environment;
             _logger = logger;
+            _thumbnailService = thumbnailService;
         }
 
         // GET: /api/comics - Obtener todos los cómics aprobados
@@ -39,6 +42,7 @@ namespace ComicReaderBackend.Controllers
                     c.Autor,
                     c.Descripcion,
                     c.Formato,
+                    c.RutaMiniatura,
                     c.FechaSubida,
                     SubidoPor = c.SubidoPor!.Username,
                     TotalVotos = c.Votos!.Count
@@ -133,6 +137,7 @@ namespace ComicReaderBackend.Controllers
                 comic.Autor,
                 comic.Descripcion,
                 comic.Formato,
+                comic.RutaMiniatura,
                 comic.FechaSubida,
                 comic.Aprobado,
                 SubidoPor = comic.SubidoPor!.Username,
@@ -237,6 +242,20 @@ namespace ComicReaderBackend.Controllers
                 throw;
             }
 
+            // Generar miniatura del comic
+            string? rutaMiniatura = null;
+            try
+            {
+                _logger.LogInformation("Generando miniatura...");
+                rutaMiniatura = await _thumbnailService.GenerateThumbnailAsync(filePath, formatoDetectado);
+                _logger.LogInformation("✅ Miniatura generada: {RutaMiniatura}", rutaMiniatura);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "⚠️ No se pudo generar miniatura, continuando sin ella");
+                // No falla la subida si la miniatura falla
+            }
+
             // Crear el comic en la base de datos con formato autodetectado
             var nuevoComic = new Comic
             {
@@ -245,6 +264,7 @@ namespace ComicReaderBackend.Controllers
                 Descripcion = uploadDto.Descripcion,
                 Formato = formatoDetectado, // Usar formato autodetectado
                 RutaArchivo = "/uploads/" + fileName,
+                RutaMiniatura = rutaMiniatura,
                 FechaSubida = DateTime.UtcNow,
                 SubidoPorId = userId,
                 Aprobado = false // Los comics necesitan aprobación de un admin

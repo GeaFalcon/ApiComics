@@ -83,45 +83,70 @@ function ComicList({ onNavigate }) {
             ) : (
                 <div style={styles.grid}>
                     {comics.map((comic) => (
-                        <div key={comic.id} style={styles.card}>
-                            <div style={styles.cardHeader}>
-                                <h3 style={styles.cardTitle}>{comic.titulo}</h3>
-                                <span style={styles.votes}>❤️ {comic.totalVotos}</span>
-                            </div>
+                        <div key={comic.id} style={styles.card} onClick={() => handleRead(comic.id)}>
+                            {comic.rutaMiniatura ? (
+                                <div style={styles.thumbnailContainer}>
+                                    <img
+                                        src={comic.rutaMiniatura}
+                                        alt={comic.titulo}
+                                        style={styles.thumbnail}
+                                        onError={(e) => {
+                                            e.target.style.display = 'none';
+                                            e.target.nextSibling.style.display = 'flex';
+                                        }}
+                                    />
+                                    <div style={{...styles.placeholderThumbnail, display: 'none'}}>
+                                        <span style={styles.placeholderIcon}>📖</span>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div style={styles.thumbnailContainer}>
+                                    <div style={styles.placeholderThumbnail}>
+                                        <span style={styles.placeholderIcon}>📖</span>
+                                    </div>
+                                </div>
+                            )}
 
-                            <div style={styles.cardBody}>
-                                <p style={styles.author}><strong>Autor:</strong> {comic.autor}</p>
-                                {comic.descripcion && (
-                                    <p style={styles.description}>{comic.descripcion}</p>
-                                )}
-                                <p style={styles.meta}>
-                                    <span>Formato: {comic.formato}</span>
-                                    <span>Subido por: {comic.subidoPor}</span>
-                                </p>
-                                <p style={styles.date}>
-                                    {new Date(comic.fechaSubida).toLocaleDateString()}
-                                </p>
-                            </div>
+                            <div style={styles.cardContent}>
+                                <div style={styles.cardHeader}>
+                                    <h3 style={styles.cardTitle}>{comic.titulo}</h3>
+                                    <span style={styles.votes}>❤️ {comic.totalVotos}</span>
+                                </div>
 
-                            <div style={styles.cardFooter}>
-                                <button
-                                    style={styles.actionButton}
-                                    onClick={() => handleRead(comic.id)}
-                                >
-                                    Leer
-                                </button>
-                                <button
-                                    style={{...styles.actionButton, ...styles.secondaryButton}}
-                                    onClick={() => handleVote(comic.id)}
-                                >
-                                    ❤️ Votar
-                                </button>
-                                <button
-                                    style={{...styles.actionButton, ...styles.secondaryButton}}
-                                    onClick={() => handleAddToFavorites(comic.id)}
-                                >
-                                    ⭐ Favorito
-                                </button>
+                                <div style={styles.cardBody}>
+                                    <p style={styles.author}><strong>Autor:</strong> {comic.autor}</p>
+                                    {comic.descripcion && (
+                                        <p style={styles.description}>{comic.descripcion.substring(0, 100)}{comic.descripcion.length > 100 ? '...' : ''}</p>
+                                    )}
+                                    <p style={styles.meta}>
+                                        <span>Formato: {comic.formato}</span>
+                                        <span>Subido por: {comic.subidoPor}</span>
+                                    </p>
+                                    <p style={styles.date}>
+                                        {new Date(comic.fechaSubida).toLocaleDateString()}
+                                    </p>
+                                </div>
+
+                                <div style={styles.cardFooter} onClick={(e) => e.stopPropagation()}>
+                                    <button
+                                        style={styles.actionButton}
+                                        onClick={() => handleRead(comic.id)}
+                                    >
+                                        📖 Leer
+                                    </button>
+                                    <button
+                                        style={{...styles.actionButton, ...styles.secondaryButton}}
+                                        onClick={() => handleVote(comic.id)}
+                                    >
+                                        ❤️ Votar
+                                    </button>
+                                    <button
+                                        style={{...styles.actionButton, ...styles.secondaryButton}}
+                                        onClick={() => handleAddToFavorites(comic.id)}
+                                    >
+                                        ⭐ Favorito
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     ))}
@@ -185,29 +210,61 @@ const styles = {
     },
     card: {
         background: 'white',
-        borderRadius: '10px',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+        borderRadius: '12px',
+        boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
         overflow: 'hidden',
-        transition: 'transform 0.2s',
-        ':hover': {
-            transform: 'translateY(-5px)'
-        }
+        transition: 'all 0.3s ease',
+        cursor: 'pointer',
+        display: 'flex',
+        flexDirection: 'column'
+    },
+    thumbnailContainer: {
+        width: '100%',
+        height: '350px',
+        overflow: 'hidden',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        position: 'relative'
+    },
+    thumbnail: {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        transition: 'transform 0.3s ease'
+    },
+    placeholderThumbnail: {
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+    },
+    placeholderIcon: {
+        fontSize: '5rem',
+        opacity: 0.5
+    },
+    cardContent: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column'
     },
     cardHeader: {
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        color: 'white',
         padding: '1rem',
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderBottom: '1px solid #f0f0f0'
     },
     cardTitle: {
         margin: 0,
-        fontSize: '1.2rem'
+        fontSize: '1.2rem',
+        color: '#667eea',
+        fontWeight: '700'
     },
     votes: {
         fontSize: '1rem',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: '#ff6b6b'
     },
     cardBody: {
         padding: '1rem'
