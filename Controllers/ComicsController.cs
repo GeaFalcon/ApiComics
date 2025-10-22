@@ -156,14 +156,26 @@ namespace ComicReaderBackend.Controllers
                 return BadRequest(new { mensaje = "El archivo es obligatorio." });
             }
 
-            // Verificar formato permitido
+            // Detectar formato automáticamente desde la extensión del archivo
             var formatosPermitidos = new List<string> { "pdf", "cbz", "cbr", "jpg", "png", "jpeg" };
             var extension = Path.GetExtension(uploadDto.Archivo.FileName).ToLower().TrimStart('.');
 
             if (!formatosPermitidos.Contains(extension))
             {
-                return BadRequest(new { mensaje = "Formato no permitido. Usa PDF, CBZ, CBR o imágenes." });
+                return BadRequest(new { mensaje = "Formato no permitido. Usa PDF, CBZ, CBR o imágenes (JPG, PNG)." });
             }
+
+            // Mapear extensión a formato legible
+            var formatoDetectado = extension.ToUpper() switch
+            {
+                "PDF" => "PDF",
+                "CBZ" => "CBZ",
+                "CBR" => "CBR",
+                "JPG" => "JPG",
+                "JPEG" => "JPG",
+                "PNG" => "PNG",
+                _ => extension.ToUpper()
+            };
 
             // Guardar archivo
             var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads");
@@ -180,13 +192,13 @@ namespace ComicReaderBackend.Controllers
                 await uploadDto.Archivo.CopyToAsync(stream);
             }
 
-            // Crear el comic en la base de datos
+            // Crear el comic en la base de datos con formato autodetectado
             var nuevoComic = new Comic
             {
                 Titulo = uploadDto.Titulo,
                 Autor = uploadDto.Autor,
                 Descripcion = uploadDto.Descripcion,
-                Formato = uploadDto.Formato,
+                Formato = formatoDetectado, // Usar formato autodetectado
                 RutaArchivo = "/uploads/" + fileName,
                 FechaSubida = DateTime.UtcNow,
                 SubidoPorId = userId,

@@ -15,8 +15,8 @@ namespace ComicReaderBackend.DTOs
         [MaxLength(1000)]
         public string? Descripcion { get; set; }
 
-        [Required(ErrorMessage = "El formato es obligatorio.")]
-        public string Formato { get; set; } = string.Empty;
+        // Formato ahora es opcional - se detecta automáticamente del archivo
+        public string? Formato { get; set; }
 
         [Required(ErrorMessage = "El archivo es obligatorio.")]
         public IFormFile Archivo { get; set; } = null!;
