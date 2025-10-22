@@ -15,11 +15,13 @@ namespace ComicReaderBackend.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _environment;
+        private readonly ILogger<ComicsController> _logger;
 
-        public ComicsController(ApplicationDbContext context, IWebHostEnvironment environment)
+        public ComicsController(ApplicationDbContext context, IWebHostEnvironment environment, ILogger<ComicsController> logger)
         {
             _context = context;
             _environment = environment;
+            _logger = logger;
         }
 
         // GET: /api/comics - Obtener todos los cómics aprobados
