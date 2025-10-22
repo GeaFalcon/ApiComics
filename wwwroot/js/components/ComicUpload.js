@@ -59,8 +59,14 @@ function ComicUpload({ onNavigate }) {
         }
     };
 
+    const handleDropZoneClick = () => {
+        document.getElementById('fileInput').click();
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        e.stopPropagation();
+
         setLoading(true);
         setError('');
         setSuccess('');
@@ -71,12 +77,26 @@ function ComicUpload({ onNavigate }) {
             return;
         }
 
+        if (!formData.titulo.trim()) {
+            setError('El título es obligatorio');
+            setLoading(false);
+            return;
+        }
+
+        if (!formData.autor.trim()) {
+            setError('El autor es obligatorio');
+            setLoading(false);
+            return;
+        }
+
         try {
             const formDataToSend = new FormData();
-            formDataToSend.append('Titulo', formData.titulo);
-            formDataToSend.append('Autor', formData.autor);
-            formDataToSend.append('Descripcion', formData.descripcion);
-            formDataToSend.append('Archivo', file);
+            formDataToSend.append('titulo', formData.titulo.trim());
+            formDataToSend.append('autor', formData.autor.trim());
+            if (formData.descripcion.trim()) {
+                formDataToSend.append('descripcion', formData.descripcion.trim());
+            }
+            formDataToSend.append('archivo', file);
 
             const response = await API.postFormData(API_ENDPOINTS.COMICS_UPLOAD, formDataToSend);
             setSuccess(response.mensaje || 'Comic subido correctamente. Está pendiente de aprobación.');
@@ -88,6 +108,7 @@ function ComicUpload({ onNavigate }) {
             }, 2000);
         } catch (err) {
             setError(err.message || 'Error al subir el comic');
+            console.error('Error al subir:', err);
         } finally {
             setLoading(false);
         }
@@ -135,7 +156,7 @@ function ComicUpload({ onNavigate }) {
                         onDragLeave={handleDrag}
                         onDragOver={handleDrag}
                         onDrop={handleDrop}
-                        onClick={() => document.getElementById('fileInput').click()}
+                        onClick={handleDropZoneClick}
                     >
                         <input
                             id="fileInput"
@@ -160,7 +181,7 @@ function ComicUpload({ onNavigate }) {
                             </>
                         ) : (
                             <>
-                                <div style={styles.filePreview}>
+                                <div style={styles.filePreview} onClick={(e) => e.stopPropagation()}>
                                     <span style={styles.fileIcon}>{getFileIcon(file.name)}</span>
                                     <div style={styles.fileInfo}>
                                         <p style={styles.fileName}>{file.name}</p>
