@@ -15,26 +15,13 @@ namespace ComicReaderBackend.Data
             {
                 logger.LogInformation("🔄 Iniciando configuración de base de datos...");
 
-                // Intentar aplicar migraciones si existen, si no, usar EnsureCreated
-                try
+                // Verificar si hay migraciones aplicadas o pendientes
+                var appliedMigrations = await context.Database.GetAppliedMigrationsAsync();
+                var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
+
+                // Si no hay migraciones aplicadas ni pendientes, usar EnsureCreated
+                if (!appliedMigrations.Any() && !pendingMigrations.Any())
                 {
-                    var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
-                    if (pendingMigrations.Any())
-                    {
-                        logger.LogInformation("📦 Aplicando migraciones pendientes...");
-                        await context.Database.MigrateAsync();
-                        logger.LogInformation("✅ Migraciones aplicadas correctamente");
-                    }
-                    else
-                    {
-                        // Intentar migrar de todas formas (aplica cualquier migración existente)
-                        await context.Database.MigrateAsync();
-                        logger.LogInformation("✅ Base de datos actualizada");
-                    }
-                }
-                catch (InvalidOperationException)
-                {
-                    // No hay migraciones configuradas, usar EnsureCreated
                     logger.LogInformation("📦 No hay migraciones configuradas. Usando EnsureCreated...");
                     var created = await context.Database.EnsureCreatedAsync();
                     if (created)
@@ -45,6 +32,18 @@ namespace ComicReaderBackend.Data
                     {
                         logger.LogInformation("ℹ️  La base de datos ya existe");
                     }
+                }
+                else if (pendingMigrations.Any())
+                {
+                    // Hay migraciones pendientes, aplicarlas
+                    logger.LogInformation($"📦 Aplicando {pendingMigrations.Count()} migraciones pendientes...");
+                    await context.Database.MigrateAsync();
+                    logger.LogInformation("✅ Migraciones aplicadas correctamente");
+                }
+                else
+                {
+                    // Hay migraciones aplicadas pero no pendientes
+                    logger.LogInformation("✅ Base de datos ya está actualizada");
                 }
 
                 // Crear usuario administrador por defecto si no existe
