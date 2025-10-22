@@ -40,9 +40,12 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
-// Configurar Kestrel explícitamente para manejar certificados
+// Configurar Kestrel explícitamente para manejar certificados y archivos grandes
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
+    // Permitir archivos de hasta 200MB
+    serverOptions.Limits.MaxRequestBodySize = 200 * 1024 * 1024; // 200MB
+
     serverOptions.ConfigureHttpsDefaults(listenOptions =>
     {
         listenOptions.SslProtocols = System.Security.Authentication.SslProtocols.Tls12 | System.Security.Authentication.SslProtocols.Tls13;
@@ -59,6 +62,14 @@ builder.Services.AddCors(options =>
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
+});
+
+// Configurar FormOptions para permitir archivos grandes
+builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 200 * 1024 * 1024; // 200MB
+    options.ValueLengthLimit = int.MaxValue;
+    options.MultipartHeadersLengthLimit = int.MaxValue;
 });
 
 // Agregar los controladores para manejar rutas API

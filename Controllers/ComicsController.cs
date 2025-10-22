@@ -144,6 +144,8 @@ namespace ComicReaderBackend.Controllers
         // POST: /api/comics/upload - Subir un nuevo cómic
         [HttpPost("upload")]
         [Authorize]
+        [RequestSizeLimit(200 * 1024 * 1024)] // 200MB
+        [RequestFormLimits(MultipartBodyLengthLimit = 200 * 1024 * 1024)]
         public async Task<IActionResult> UploadComic([FromForm] ComicUploadDto uploadDto)
         {
             _logger.LogInformation("=== RECIBIENDO PETICIÓN DE SUBIDA DE COMIC ===");
