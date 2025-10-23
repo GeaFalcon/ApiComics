@@ -74,7 +74,7 @@ namespace ComicReaderBackend.Data
                 command.CommandText = @"
                     SELECT COUNT(*)
                     FROM information_schema.columns
-                    WHERE table_name = 'Comics'
+                    WHERE table_name = 'comics'
                     AND column_name = 'RutaMiniatura';";
 
                 var result = await command.ExecuteScalarAsync();
