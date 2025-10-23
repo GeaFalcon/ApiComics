@@ -391,55 +391,78 @@ namespace ComicReaderBackend.Controllers
 
         // GET: /api/comics/download/{id} - Descargar un cómic
         [HttpGet("download/{id}")]
-        [Authorize]
         public async Task<IActionResult> DownloadComic(int id)
         {
+            _logger.LogInformation("Solicitando descarga de comic con ID: {Id}", id);
+
             var comic = await _context.Comics.FindAsync(id);
 
-            if (comic == null || !comic.Aprobado)
+            if (comic == null)
             {
+                _logger.LogWarning("Comic con ID {Id} no encontrado", id);
                 return NotFound(new { mensaje = $"No se encontró el cómic con ID {id}." });
+            }
+
+            if (!comic.Aprobado)
+            {
+                _logger.LogWarning("Comic con ID {Id} no está aprobado", id);
+                return NotFound(new { mensaje = $"El cómic con ID {id} no está disponible." });
             }
 
             if (string.IsNullOrEmpty(_environment.WebRootPath))
             {
+                _logger.LogError("WebRootPath no está configurado");
                 return StatusCode(500, new { mensaje = "Error de configuración: WebRootPath no está configurado." });
             }
 
             var filePath = Path.Combine(_environment.WebRootPath, comic.RutaArchivo.TrimStart('/'));
+            _logger.LogInformation("Ruta del archivo: {FilePath}", filePath);
 
             if (!System.IO.File.Exists(filePath))
             {
+                _logger.LogError("Archivo no existe en: {FilePath}", filePath);
                 return NotFound(new { mensaje = "El archivo del cómic no existe en el servidor." });
             }
 
             var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             var contentType = "application/octet-stream";
 
+            _logger.LogInformation("Enviando archivo para descarga: {FileName}", Path.GetFileName(filePath));
             return File(fileStream, contentType, Path.GetFileName(filePath));
         }
 
         // GET: /api/comics/view/{id} - Ver un cómic
         [HttpGet("view/{id}")]
-        [Authorize]
         public async Task<IActionResult> ViewComic(int id)
         {
+            _logger.LogInformation("Solicitando visualización de comic con ID: {Id}", id);
+
             var comic = await _context.Comics.FindAsync(id);
 
-            if (comic == null || !comic.Aprobado)
+            if (comic == null)
             {
+                _logger.LogWarning("Comic con ID {Id} no encontrado", id);
                 return NotFound(new { mensaje = $"No se encontró el cómic con ID {id}." });
+            }
+
+            if (!comic.Aprobado)
+            {
+                _logger.LogWarning("Comic con ID {Id} no está aprobado", id);
+                return NotFound(new { mensaje = $"El cómic con ID {id} no está disponible." });
             }
 
             if (string.IsNullOrEmpty(_environment.WebRootPath))
             {
+                _logger.LogError("WebRootPath no está configurado");
                 return StatusCode(500, new { mensaje = "Error de configuración: WebRootPath no está configurado." });
             }
 
             var filePath = Path.Combine(_environment.WebRootPath, comic.RutaArchivo.TrimStart('/'));
+            _logger.LogInformation("Ruta del archivo: {FilePath}", filePath);
 
             if (!System.IO.File.Exists(filePath))
             {
+                _logger.LogError("Archivo no existe en: {FilePath}", filePath);
                 return NotFound(new { mensaje = "El archivo del cómic no existe en el servidor." });
             }
 
@@ -454,19 +477,30 @@ namespace ComicReaderBackend.Controllers
                 _ => "application/octet-stream"
             };
 
+            _logger.LogInformation("Enviando archivo para visualización: {FileName}, ContentType: {ContentType}",
+                Path.GetFileName(filePath), contentType);
+
             return PhysicalFile(filePath, contentType);
         }
 
         // GET: /api/comics/view/pages/{id} - Extraer y ver páginas de un cómic CBZ/CBR
         [HttpGet("view/pages/{id}")]
-        [Authorize]
         public async Task<IActionResult> ViewComicPages(int id)
         {
+            _logger.LogInformation("Solicitando páginas de comic con ID: {Id}", id);
+
             var comic = await _context.Comics.FindAsync(id);
 
-            if (comic == null || !comic.Aprobado)
+            if (comic == null)
             {
+                _logger.LogWarning("Comic con ID {Id} no encontrado", id);
                 return NotFound(new { mensaje = $"No se encontró el cómic con ID {id}." });
+            }
+
+            if (!comic.Aprobado)
+            {
+                _logger.LogWarning("Comic con ID {Id} no está aprobado", id);
+                return NotFound(new { mensaje = $"El cómic con ID {id} no está disponible." });
             }
 
             if (string.IsNullOrEmpty(_environment.WebRootPath))
