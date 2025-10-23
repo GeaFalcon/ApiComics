@@ -57,401 +57,221 @@ function Home({ onNavigate }) {
 
     if (loading) {
         return (
-            <div style={styles.container}>
-                <div style={styles.loading}>Cargando comics...</div>
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="text-center">
+                    <div className="inline-block animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-purple-600"></div>
+                    <p className="mt-4 text-xl text-gray-600">Cargando comics...</p>
+                </div>
             </div>
         );
     }
 
     if (error) {
         return (
-            <div style={styles.container}>
-                <div style={styles.error}>{error}</div>
+            <div className="max-w-7xl mx-auto p-8">
+                <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-lg shadow-sm">
+                    <p className="text-red-700 font-medium">{error}</p>
+                </div>
             </div>
         );
     }
 
     return (
-        <div style={styles.homeContainer}>
-            {/* Main Content - 80% */}
-            <div style={styles.mainContent}>
-                <div style={styles.header}>
-                    <h1 style={styles.title}>Comics Disponibles</h1>
-                    <p style={styles.subtitle}>{comics.length} comics aprobados</p>
-                </div>
+        <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
+            <div className="max-w-[1600px] mx-auto p-4 md:p-8">
+                <div className="flex flex-col lg:flex-row gap-6">
+                    {/* Main Content - 80% */}
+                    <div className="flex-1 lg:w-4/5">
+                        {/* Header */}
+                        <div className="mb-8">
+                            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                                Comics Disponibles
+                            </h1>
+                            <p className="text-lg text-gray-600">
+                                {comics.length} {comics.length === 1 ? 'comic aprobado' : 'comics aprobados'}
+                            </p>
+                        </div>
 
-                {comics.length === 0 ? (
-                    <div style={styles.emptyState}>
-                        <p>No hay comics disponibles aún.</p>
-                        <button style={styles.uploadButton} onClick={() => onNavigate('upload')}>
-                            Sube el primer comic
-                        </button>
-                    </div>
-                ) : (
-                    <div style={styles.grid}>
-                        {comics.map((comic) => (
-                            <div key={comic.id} style={styles.card}>
-                                {comic.rutaMiniatura && (
-                                    <div style={styles.cardImage}>
-                                        <img
-                                            src={comic.rutaMiniatura}
-                                            alt={comic.titulo}
-                                            style={styles.thumbnail}
-                                            onError={(e) => {
-                                                e.target.style.display = 'none';
-                                            }}
-                                        />
+                        {comics.length === 0 ? (
+                            <div className="bg-white rounded-2xl shadow-xl p-12 text-center">
+                                <svg className="w-24 h-24 mx-auto text-gray-300 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                                <p className="text-xl text-gray-600 mb-6">No hay comics disponibles aún</p>
+                                <button
+                                    onClick={() => onNavigate('upload')}
+                                    className="bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold px-8 py-3 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                                >
+                                    Sube el primer comic
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                                {comics.map((comic) => (
+                                    <div
+                                        key={comic.id}
+                                        className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 flex flex-col"
+                                    >
+                                        {/* Comic Thumbnail */}
+                                        {comic.rutaMiniatura && (
+                                            <div className="h-56 bg-gradient-to-br from-purple-100 to-blue-100 overflow-hidden">
+                                                <img
+                                                    src={comic.rutaMiniatura}
+                                                    alt={comic.titulo}
+                                                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                                                    onError={(e) => {
+                                                        e.target.style.display = 'none';
+                                                    }}
+                                                />
+                                            </div>
+                                        )}
+
+                                        {/* Header with Title and Votes */}
+                                        <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-5 py-4">
+                                            <div className="flex justify-between items-start">
+                                                <h3 className="text-lg font-bold flex-1">{comic.titulo}</h3>
+                                                <div className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 ml-2">
+                                                    <span className="text-sm font-semibold">❤️ {comic.totalVotos}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Card Body */}
+                                        <div className="p-5 flex-1 flex flex-col">
+                                            <p className="text-sm text-gray-700 mb-2">
+                                                <span className="font-semibold">Autor:</span> {comic.autor}
+                                            </p>
+
+                                            {comic.descripcion && (
+                                                <p className="text-sm text-gray-600 mb-3 line-clamp-3">
+                                                    {comic.descripcion}
+                                                </p>
+                                            )}
+
+                                            <div className="mt-auto space-y-1">
+                                                <div className="flex flex-wrap gap-2 text-xs text-gray-500">
+                                                    <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded-full font-medium">
+                                                        {comic.formato}
+                                                    </span>
+                                                    <span className="px-2 py-1 bg-gray-100 text-gray-700 rounded-full">
+                                                        {comic.subidoPor}
+                                                    </span>
+                                                </div>
+                                                <p className="text-xs text-gray-400">
+                                                    {new Date(comic.fechaSubida).toLocaleDateString('es-ES', {
+                                                        year: 'numeric',
+                                                        month: 'long',
+                                                        day: 'numeric'
+                                                    })}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        {/* Card Footer with Actions */}
+                                        <div className="bg-gray-50 px-5 py-4 flex gap-2">
+                                            <button
+                                                onClick={() => handleRead(comic.id)}
+                                                className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg"
+                                            >
+                                                Leer
+                                            </button>
+                                            <button
+                                                onClick={() => handleVote(comic.id)}
+                                                className="flex-1 bg-white text-gray-700 font-medium py-2 px-4 rounded-lg border-2 border-gray-200 hover:border-purple-400 hover:bg-purple-50 transition-all duration-300"
+                                            >
+                                                ❤️ Votar
+                                            </button>
+                                            <button
+                                                onClick={() => handleAddToFavorites(comic.id)}
+                                                className="flex-1 bg-white text-gray-700 font-medium py-2 px-4 rounded-lg border-2 border-gray-200 hover:border-yellow-400 hover:bg-yellow-50 transition-all duration-300"
+                                            >
+                                                ⭐
+                                            </button>
+                                        </div>
                                     </div>
-                                )}
+                                ))}
+                            </div>
+                        )}
+                    </div>
 
-                                <div style={styles.cardHeader}>
-                                    <h3 style={styles.cardTitle}>{comic.titulo}</h3>
-                                    <span style={styles.votes}>❤️ {comic.totalVotos}</span>
-                                </div>
-
-                                <div style={styles.cardBody}>
-                                    <p style={styles.author}><strong>Autor:</strong> {comic.autor}</p>
-                                    {comic.descripcion && (
-                                        <p style={styles.description}>{comic.descripcion}</p>
-                                    )}
-                                    <p style={styles.meta}>
-                                        <span>Formato: {comic.formato}</span>
-                                        <span>Subido por: {comic.subidoPor}</span>
-                                    </p>
-                                    <p style={styles.date}>
-                                        {new Date(comic.fechaSubida).toLocaleDateString()}
-                                    </p>
-                                </div>
-
-                                <div style={styles.cardFooter}>
-                                    <button
-                                        style={styles.actionButton}
-                                        onClick={() => handleRead(comic.id)}
-                                    >
-                                        Leer
-                                    </button>
-                                    <button
-                                        style={{...styles.actionButton, ...styles.secondaryButton}}
-                                        onClick={() => handleVote(comic.id)}
-                                    >
-                                        ❤️ Votar
-                                    </button>
-                                    <button
-                                        style={{...styles.actionButton, ...styles.secondaryButton}}
-                                        onClick={() => handleAddToFavorites(comic.id)}
-                                    >
-                                        ⭐ Favorito
-                                    </button>
+                    {/* Sidebar - 20% */}
+                    <div className="lg:w-1/5 min-w-[280px]">
+                        <div className="bg-white rounded-xl shadow-lg p-6 sticky top-6 max-h-[calc(100vh-3rem)] overflow-y-auto">
+                            {/* Sidebar Header */}
+                            <div className="border-b-2 border-purple-600 pb-4 mb-4">
+                                <div className="flex items-center justify-center space-x-2">
+                                    <svg className="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                    <h2 className="text-xl font-bold text-gray-900">Más Votados</h2>
                                 </div>
                             </div>
-                        ))}
-                    </div>
-                )}
-            </div>
 
-            {/* Sidebar - 20% */}
-            <div style={styles.sidebar}>
-                <div style={styles.sidebarHeader}>
-                    <h2 style={styles.sidebarTitle}>Más Votados</h2>
-                </div>
+                            {/* Top Voted List */}
+                            {topVotedComics.length > 0 ? (
+                                <div className="space-y-3">
+                                    {topVotedComics.map((comic, index) => (
+                                        <div
+                                            key={comic.id}
+                                            onClick={() => handleRead(comic.id)}
+                                            className="flex gap-3 p-3 bg-gradient-to-br from-gray-50 to-purple-50 rounded-lg cursor-pointer hover:from-purple-100 hover:to-blue-100 transition-all duration-300 border border-transparent hover:border-purple-300 group"
+                                        >
+                                            {/* Rank Badge */}
+                                            <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center">
+                                                <div className={`
+                                                    text-lg font-bold rounded-full w-8 h-8 flex items-center justify-center
+                                                    ${index === 0 ? 'bg-gradient-to-br from-yellow-400 to-yellow-600 text-white' :
+                                                      index === 1 ? 'bg-gradient-to-br from-gray-300 to-gray-500 text-white' :
+                                                      index === 2 ? 'bg-gradient-to-br from-orange-400 to-orange-600 text-white' :
+                                                      'bg-purple-200 text-purple-700'}
+                                                `}>
+                                                    {index + 1}
+                                                </div>
+                                            </div>
 
-                {topVotedComics.length > 0 ? (
-                    <div style={styles.topVotedList}>
-                        {topVotedComics.map((comic, index) => (
-                            <div
-                                key={comic.id}
-                                style={styles.topVotedItem}
-                                onClick={() => handleRead(comic.id)}
-                            >
-                                <div style={styles.topVotedRank}>#{index + 1}</div>
+                                            {/* Thumbnail */}
+                                            {comic.rutaMiniatura && (
+                                                <div className="flex-shrink-0 w-14 h-14 rounded-lg overflow-hidden bg-gray-200 shadow-sm">
+                                                    <img
+                                                        src={comic.rutaMiniatura}
+                                                        alt={comic.titulo}
+                                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                                                        onError={(e) => {
+                                                            e.target.style.display = 'none';
+                                                        }}
+                                                    />
+                                                </div>
+                                            )}
 
-                                {comic.rutaMiniatura && (
-                                    <div style={styles.topVotedThumbnailContainer}>
-                                        <img
-                                            src={comic.rutaMiniatura}
-                                            alt={comic.titulo}
-                                            style={styles.topVotedThumbnail}
-                                            onError={(e) => {
-                                                e.target.style.display = 'none';
-                                            }}
-                                        />
-                                    </div>
-                                )}
-
-                                <div style={styles.topVotedInfo}>
-                                    <h4 style={styles.topVotedTitle}>{comic.titulo}</h4>
-                                    <p style={styles.topVotedAuthor}>{comic.autor}</p>
-                                    <p style={styles.topVotedVotes}>❤️ {comic.totalVotos} votos</p>
+                                            {/* Comic Info */}
+                                            <div className="flex-1 min-w-0">
+                                                <h4 className="text-sm font-bold text-gray-900 truncate group-hover:text-purple-700 transition-colors">
+                                                    {comic.titulo}
+                                                </h4>
+                                                <p className="text-xs text-gray-600 truncate">
+                                                    {comic.autor}
+                                                </p>
+                                                <div className="flex items-center mt-1">
+                                                    <span className="text-xs font-semibold text-purple-600">
+                                                        ❤️ {comic.totalVotos}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
-                            </div>
-                        ))}
+                            ) : (
+                                <div className="text-center py-8">
+                                    <svg className="w-16 h-16 mx-auto text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                                    </svg>
+                                    <p className="text-sm text-gray-500">No hay comics votados aún</p>
+                                </div>
+                            )}
+                        </div>
                     </div>
-                ) : (
-                    <div style={styles.sidebarEmpty}>
-                        <p>No hay comics votados aún</p>
-                    </div>
-                )}
+                </div>
             </div>
         </div>
     );
 }
-
-const styles = {
-    homeContainer: {
-        display: 'flex',
-        gap: '1.5rem',
-        maxWidth: '1600px',
-        margin: '0 auto',
-        padding: '2rem',
-        minHeight: 'calc(100vh - 200px)'
-    },
-    mainContent: {
-        flex: '0 0 78%',
-        minWidth: 0
-    },
-    sidebar: {
-        flex: '0 0 20%',
-        minWidth: '250px',
-        background: 'white',
-        borderRadius: '10px',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-        padding: '1.5rem',
-        position: 'sticky',
-        top: '20px',
-        height: 'fit-content',
-        maxHeight: 'calc(100vh - 100px)',
-        overflowY: 'auto'
-    },
-    sidebarHeader: {
-        borderBottom: '2px solid #667eea',
-        paddingBottom: '1rem',
-        marginBottom: '1rem'
-    },
-    sidebarTitle: {
-        fontSize: '1.3rem',
-        color: '#333',
-        margin: 0,
-        textAlign: 'center'
-    },
-    topVotedList: {
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1rem'
-    },
-    topVotedItem: {
-        display: 'flex',
-        gap: '0.75rem',
-        padding: '0.75rem',
-        background: '#f9f9f9',
-        borderRadius: '8px',
-        cursor: 'pointer',
-        transition: 'all 0.2s',
-        border: '1px solid transparent',
-        ':hover': {
-            background: '#f0f0f0',
-            border: '1px solid #667eea',
-            transform: 'translateX(5px)'
-        }
-    },
-    topVotedRank: {
-        fontSize: '1.2rem',
-        fontWeight: 'bold',
-        color: '#667eea',
-        minWidth: '30px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    topVotedThumbnailContainer: {
-        flex: '0 0 60px',
-        height: '60px',
-        borderRadius: '5px',
-        overflow: 'hidden',
-        background: '#e0e0e0'
-    },
-    topVotedThumbnail: {
-        width: '100%',
-        height: '100%',
-        objectFit: 'cover'
-    },
-    topVotedInfo: {
-        flex: 1,
-        minWidth: 0,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center'
-    },
-    topVotedTitle: {
-        margin: '0 0 0.25rem 0',
-        fontSize: '0.9rem',
-        fontWeight: 'bold',
-        color: '#333',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap'
-    },
-    topVotedAuthor: {
-        margin: '0 0 0.25rem 0',
-        fontSize: '0.75rem',
-        color: '#666',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap'
-    },
-    topVotedVotes: {
-        margin: 0,
-        fontSize: '0.8rem',
-        color: '#667eea',
-        fontWeight: 'bold'
-    },
-    sidebarEmpty: {
-        textAlign: 'center',
-        padding: '2rem 1rem',
-        color: '#999',
-        fontSize: '0.9rem'
-    },
-    container: {
-        maxWidth: '1200px',
-        margin: '0 auto',
-        padding: '2rem'
-    },
-    header: {
-        marginBottom: '2rem'
-    },
-    title: {
-        fontSize: '2rem',
-        color: '#333',
-        marginBottom: '0.5rem'
-    },
-    subtitle: {
-        color: '#666',
-        fontSize: '1.1rem'
-    },
-    loading: {
-        textAlign: 'center',
-        padding: '3rem',
-        fontSize: '1.2rem',
-        color: '#666'
-    },
-    error: {
-        background: '#fee',
-        color: '#c33',
-        padding: '1rem',
-        borderRadius: '5px',
-        textAlign: 'center'
-    },
-    emptyState: {
-        textAlign: 'center',
-        padding: '3rem',
-        background: '#f9f9f9',
-        borderRadius: '10px'
-    },
-    uploadButton: {
-        marginTop: '1rem',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        color: 'white',
-        border: 'none',
-        padding: '0.75rem 1.5rem',
-        borderRadius: '5px',
-        cursor: 'pointer',
-        fontSize: '1rem'
-    },
-    grid: {
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-        gap: '1.5rem'
-    },
-    card: {
-        background: 'white',
-        borderRadius: '10px',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-        overflow: 'hidden',
-        transition: 'transform 0.2s',
-        display: 'flex',
-        flexDirection: 'column'
-    },
-    cardImage: {
-        width: '100%',
-        height: '200px',
-        background: '#f0f0f0',
-        overflow: 'hidden'
-    },
-    thumbnail: {
-        width: '100%',
-        height: '100%',
-        objectFit: 'cover'
-    },
-    cardHeader: {
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        color: 'white',
-        padding: '1rem',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-    },
-    cardTitle: {
-        margin: 0,
-        fontSize: '1.1rem'
-    },
-    votes: {
-        fontSize: '1rem',
-        fontWeight: 'bold'
-    },
-    cardBody: {
-        padding: '1rem',
-        flex: 1
-    },
-    author: {
-        marginBottom: '0.5rem',
-        color: '#333'
-    },
-    description: {
-        color: '#666',
-        fontSize: '0.9rem',
-        marginBottom: '0.5rem',
-        lineHeight: '1.4',
-        display: '-webkit-box',
-        WebkitLineClamp: '3',
-        WebkitBoxOrient: 'vertical',
-        overflow: 'hidden'
-    },
-    meta: {
-        fontSize: '0.85rem',
-        color: '#888',
-        marginTop: '0.5rem',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '0.25rem'
-    },
-    date: {
-        fontSize: '0.8rem',
-        color: '#999',
-        marginTop: '0.5rem'
-    },
-    cardFooter: {
-        padding: '1rem',
-        background: '#f9f9f9',
-        display: 'flex',
-        gap: '0.5rem',
-        flexWrap: 'wrap'
-    },
-    actionButton: {
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        color: 'white',
-        border: 'none',
-        padding: '0.5rem 1rem',
-        borderRadius: '5px',
-        cursor: 'pointer',
-        fontSize: '0.9rem',
-        flex: 1,
-        minWidth: '80px',
-        transition: 'opacity 0.2s',
-        ':hover': {
-            opacity: 0.9
-        }
-    },
-    secondaryButton: {
-        background: '#f0f0f0',
-        color: '#333'
-    }
-};

@@ -5,4 +5,7 @@ wwwroot/uploads/*
 # 🔹 Ignorar archivos extraídos de CBZ/CBR
 wwwroot/extracted/
 
+# 🔹 Node modules
+node_modules/
+
 obj/
