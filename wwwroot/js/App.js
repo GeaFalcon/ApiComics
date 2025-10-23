@@ -47,7 +47,7 @@ function App() {
         // Vistas autenticadas
         switch (currentView) {
             case 'home':
-                return <ComicList onNavigate={handleNavigate} />;
+                return <Home onNavigate={handleNavigate} />;
 
             case 'upload':
                 return <ComicUpload onNavigate={handleNavigate} />;
@@ -75,10 +75,10 @@ function App() {
 
             case 'login':
                 handleNavigate('home');
-                return <ComicList onNavigate={handleNavigate} />;
+                return <Home onNavigate={handleNavigate} />;
 
             default:
-                return <ComicList onNavigate={handleNavigate} />;
+                return <Home onNavigate={handleNavigate} />;
         }
     };
 
