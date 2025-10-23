@@ -233,7 +233,7 @@ namespace ComicReaderBackend.Controllers
 
         // POST: /api/user/history/{comicId} - Registrar lectura de un comic
         [HttpPost("history/{comicId}")]
-        public async Task<IActionResult> AddToHistory(int comicId, [FromBody] int? paginaActual = null)
+        public async Task<IActionResult> AddToHistory(int comicId, [FromQuery] int? paginaActual = null)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
 
