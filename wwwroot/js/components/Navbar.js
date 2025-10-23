@@ -27,6 +27,9 @@ function Navbar({ onNavigate, currentView }) {
                         <button style={styles.navButton} onClick={() => onNavigate('home')}>
                             Inicio
                         </button>
+                        <button style={styles.navButton} onClick={() => onNavigate('series-list')}>
+                            Series
+                        </button>
                         <button style={styles.navButton} onClick={() => onNavigate('favorites')}>
                             Favoritos
                         </button>

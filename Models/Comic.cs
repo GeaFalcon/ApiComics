@@ -31,6 +31,19 @@ namespace ComicReaderBackend.Models
 
         public DateTime FechaSubida { get; set; } = DateTime.UtcNow;
 
+        // Relación con Serie (opcional)
+        public int? SerieId { get; set; }
+
+        [ForeignKey("SerieId")]
+        public Serie? Serie { get; set; }
+
+        // Información del capítulo/volumen
+        public int? NumeroCapitulo { get; set; }
+        public int? NumeroVolumen { get; set; }
+
+        [MaxLength(200)]
+        public string? TituloCapitulo { get; set; }
+
         // Estado de aprobación
         public bool Aprobado { get; set; } = false;
         public DateTime? FechaAprobacion { get; set; }

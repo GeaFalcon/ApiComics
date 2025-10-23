@@ -20,5 +20,15 @@ namespace ComicReaderBackend.DTOs
 
         [Required(ErrorMessage = "El archivo es obligatorio.")]
         public IFormFile Archivo { get; set; } = null!;
+
+        // Campos opcionales para asociar con una serie
+        public int? SerieId { get; set; }
+
+        public int? NumeroCapitulo { get; set; }
+
+        public int? NumeroVolumen { get; set; }
+
+        [MaxLength(200)]
+        public string? TituloCapitulo { get; set; }
     }
 }
