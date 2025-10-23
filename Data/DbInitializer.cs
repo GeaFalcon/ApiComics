@@ -15,42 +15,45 @@ namespace ComicReaderBackend.Data
             {
                 logger.LogInformation("🔄 Iniciando configuración de base de datos...");
 
-                // Verificar si hay migraciones aplicadas o pendientes
-                var appliedMigrations = await context.Database.GetAppliedMigrationsAsync();
-                var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
+                // Verificar si la base de datos existe
+                var canConnect = await context.Database.CanConnectAsync();
 
-                // Si no hay migraciones aplicadas ni pendientes, usar EnsureCreated
-                if (!appliedMigrations.Any() && !pendingMigrations.Any())
+                if (!canConnect)
                 {
-                    logger.LogInformation("📦 No hay migraciones configuradas. Usando EnsureCreated...");
-                    var created = await context.Database.EnsureCreatedAsync();
-                    if (created)
-                    {
-                        logger.LogInformation("✅ Base de datos y tablas creadas correctamente");
-                    }
-                    else
-                    {
-                        logger.LogInformation("ℹ️  La base de datos ya existe");
-                    }
-                }
-                else if (pendingMigrations.Any())
-                {
-                    // Hay migraciones pendientes, aplicarlas
-                    logger.LogInformation($"📦 Aplicando {pendingMigrations.Count()} migraciones pendientes...");
+                    logger.LogInformation("📦 Base de datos no existe. Creando con migraciones...");
                     await context.Database.MigrateAsync();
-                    logger.LogInformation("✅ Migraciones aplicadas correctamente");
+                    logger.LogInformation("✅ Base de datos creada correctamente");
                 }
                 else
                 {
-                    // Hay migraciones aplicadas pero no pendientes
-                    logger.LogInformation("✅ Base de datos ya está actualizada");
+                    // La base de datos existe, verificar migraciones
+                    var appliedMigrations = await context.Database.GetAppliedMigrationsAsync();
+                    var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
+
+                    // Si no hay migraciones aplicadas pero hay pendientes (BD creada con EnsureCreated)
+                    if (!appliedMigrations.Any() && pendingMigrations.Any())
+                    {
+                        logger.LogWarning("⚠️  Base de datos creada sin migraciones. Eliminando y recreando con migraciones...");
+                        await context.Database.EnsureDeletedAsync();
+                        await context.Database.MigrateAsync();
+                        logger.LogInformation("✅ Base de datos recreada con migraciones");
+                    }
+                    else if (pendingMigrations.Any())
+                    {
+                        // Hay migraciones pendientes, aplicarlas
+                        logger.LogInformation($"📦 Aplicando {pendingMigrations.Count()} migraciones pendientes...");
+                        await context.Database.MigrateAsync();
+                        logger.LogInformation("✅ Migraciones aplicadas correctamente");
+                    }
+                    else
+                    {
+                        // Base de datos actualizada
+                        logger.LogInformation("✅ Base de datos ya está actualizada");
+                    }
                 }
 
                 // Crear usuario administrador por defecto si no existe
                 await CreateDefaultAdminAsync(context, logger);
-
-                // Aplicar ajustes al esquema si es necesario (para bases de datos creadas con EnsureCreated)
-                await ApplySchemaFixesAsync(context, logger);
 
                 logger.LogInformation("✅ Base de datos configurada correctamente");
             }
@@ -58,49 +61,6 @@ namespace ComicReaderBackend.Data
             {
                 logger.LogError(ex, "❌ Error al inicializar la base de datos");
                 throw;
-            }
-        }
-
-        private static async Task ApplySchemaFixesAsync(ApplicationDbContext context, ILogger logger)
-        {
-            try
-            {
-                // Verificar si la columna RutaMiniatura existe en la tabla Comics
-                var connectionString = context.Database.GetConnectionString();
-                await using var connection = context.Database.GetDbConnection();
-                await connection.OpenAsync();
-
-                await using var command = connection.CreateCommand();
-                command.CommandText = @"
-                    SELECT COUNT(*)
-                    FROM information_schema.columns
-                    WHERE table_name = 'comics'
-                    AND column_name = 'RutaMiniatura';";
-
-                var result = await command.ExecuteScalarAsync();
-                var columnExists = Convert.ToInt32(result) > 0;
-
-                if (!columnExists)
-                {
-                    logger.LogInformation("📦 Agregando columna RutaMiniatura a la tabla Comics...");
-
-                    await using var alterCommand = connection.CreateCommand();
-                    alterCommand.CommandText = @"
-                        ALTER TABLE ""Comics""
-                        ADD COLUMN ""RutaMiniatura"" character varying(500) NULL;";
-
-                    await alterCommand.ExecuteNonQueryAsync();
-                    logger.LogInformation("✅ Columna RutaMiniatura agregada correctamente");
-                }
-                else
-                {
-                    logger.LogInformation("ℹ️  La columna RutaMiniatura ya existe en la tabla Comics");
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.LogWarning(ex, "⚠️  No se pudo verificar/agregar la columna RutaMiniatura (puede que ya exista o la tabla no exista aún)");
-                // No lanzamos excepción porque esto no debe detener la inicialización
             }
         }
 
