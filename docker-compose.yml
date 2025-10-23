@@ -5,15 +5,15 @@ services:
     image: postgres:15-alpine
     container_name: comicreader-db
     environment:
-      POSTGRES_USER: comicuser
-      POSTGRES_PASSWORD: comicpass123
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 6469
       POSTGRES_DB: comicdb
     ports:
-      - "5433:5433"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U comicuser -d comicdb"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d comicdb"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -26,7 +26,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5000
-      - ConnectionStrings__DefaultConnection=Host=db;Port=5433;Database=comicdb;Username=comicuser;Password=comicpass123
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=comicdb;Username=postgres;Password=6469
     depends_on:
       db:
         condition: service_healthy
