@@ -12,6 +12,7 @@ namespace ComicReaderBackend.Data
         // Tablas principales
         public DbSet<User> Users { get; set; }
         public DbSet<Comic> Comics { get; set; }
+        public DbSet<Serie> Series { get; set; }
 
         // Tablas de relaciones
         public DbSet<Favorito> Favoritos { get; set; }
@@ -43,6 +44,20 @@ namespace ComicReaderBackend.Data
                 .WithMany()
                 .HasForeignKey(c => c.AprobadoPorId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            // Configurar relación Serie -> Comics
+            modelBuilder.Entity<Comic>()
+                .HasOne(c => c.Serie)
+                .WithMany(s => s.Comics)
+                .HasForeignKey(c => c.SerieId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            // Configurar relación Serie -> Usuario
+            modelBuilder.Entity<Serie>()
+                .HasOne(s => s.CreadoPor)
+                .WithMany()
+                .HasForeignKey(s => s.CreadoPorId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

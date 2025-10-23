@@ -91,6 +91,16 @@ function ComicList({ onNavigate }) {
 
                             <div style={styles.cardBody}>
                                 <p style={styles.author}><strong>Autor:</strong> {comic.autor}</p>
+                                {comic.serieId && comic.serieTitulo && (
+                                    <div style={styles.serieBadge} onClick={(e) => {
+                                        e.stopPropagation();
+                                        onNavigate('serie-detail', { serieId: comic.serieId });
+                                    }}>
+                                        <span style={styles.serieIcon}>📚</span>
+                                        <span>{comic.serieTitulo}</span>
+                                        {comic.numeroCapitulo && <span> - Cap. {comic.numeroCapitulo}</span>}
+                                    </div>
+                                )}
                                 {comic.descripcion && (
                                     <p style={styles.description}>{comic.descripcion}</p>
                                 )}
@@ -215,6 +225,25 @@ const styles = {
     author: {
         marginBottom: '0.5rem',
         color: '#333'
+    },
+    serieBadge: {
+        display: 'inline-flex',
+        alignItems: 'center',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        color: 'white',
+        padding: '0.4rem 0.8rem',
+        borderRadius: '20px',
+        fontSize: '0.85rem',
+        marginBottom: '0.75rem',
+        cursor: 'pointer',
+        transition: 'transform 0.2s',
+        ':hover': {
+            transform: 'scale(1.05)'
+        }
+    },
+    serieIcon: {
+        marginRight: '0.3rem',
+        fontSize: '1rem'
     },
     description: {
         color: '#666',

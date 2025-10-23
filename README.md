@@ -54,8 +54,10 @@ dotnet run
 ### Funcionalidades de Usuario
 - ✅ **Registro y Login** con autenticación JWT (sesión de 30 días)
 - ✅ **Explorar comics** aprobados por administradores
+- ✅ **Sistema de Series** - Organiza comics en series (ej: One Piece con múltiples capítulos)
+- ✅ **Página de detalle de serie** - Ve todos los capítulos de una serie con miniaturas y descripciones
 - ✅ **Leer comics** en formatos PDF, CBZ, CBR, JPG, PNG
-- ✅ **Subir comics** para revisión de administradores
+- ✅ **Subir comics** para revisión de administradores (opcionalmente asociados a una serie)
 - ✅ **Agregar a favoritos** los comics preferidos
 - ✅ **Votar** por los comics favoritos
 - ✅ **Historial de lectura** con registro automático
@@ -88,10 +90,12 @@ ApiComics/
 ├── Controllers/
 │   ├── UsersControlles.cs         # Autenticación y gestión de usuarios
 │   ├── ComicsController.cs        # CRUD y gestión de comics
+│   ├── SeriesController.cs        # Gestión de series de comics
 │   └── UserInteractionsController.cs  # Favoritos, votos, historial
 ├── Models/
 │   ├── User.cs                    # Modelo de usuario
 │   ├── Comic.cs                   # Modelo de comic
+│   ├── Serie.cs                   # Modelo de serie
 │   ├── Favorito.cs               # Modelo de favoritos
 │   ├── Voto.cs                   # Modelo de votos
 │   └── HistorialLectura.cs       # Modelo de historial
@@ -122,7 +126,9 @@ ApiComics/
 │   │   │   ├── AdminPanel.js
 │   │   │   ├── Favorites.js
 │   │   │   ├── ReadingHistory.js
-│   │   │   └── UserProfile.js
+│   │   │   ├── UserProfile.js
+│   │   │   ├── SeriesList.js
+│   │   │   └── SerieDetail.js
 │   │   └── App.js
 │   └── uploads/                   # Archivos de comics subidos
 └── Program.cs
@@ -243,11 +249,21 @@ La aplicación estará disponible en:
 - `GET /api/comics/pending` - Listar comics pendientes (solo Admin)
 - `GET /api/comics/my-uploads` - Listar mis comics subidos (requiere autenticación)
 - `POST /api/comics/upload` - Subir nuevo comic (requiere autenticación)
+  - Campos: Titulo, Autor, Descripcion, Formato, Archivo
+  - Opcionales para series: SerieId, NumeroCapitulo, NumeroVolumen, TituloCapitulo
 - `PUT /api/comics/{id}/approve` - Aprobar comic (solo Admin)
 - `DELETE /api/comics/{id}/reject` - Rechazar comic (solo Admin)
 - `GET /api/comics/view/{id}` - Ver comic (requiere autenticación)
 - `GET /api/comics/download/{id}` - Descargar comic (requiere autenticación)
 - `DELETE /api/comics/{id}` - Eliminar comic (Admin o propietario)
+
+### Series (`/api/series`)
+- `GET /api/series` - Listar todas las series
+- `GET /api/series/{id}` - Obtener detalle de serie con todos sus capítulos
+- `POST /api/series` - Crear nueva serie (requiere autenticación)
+  - Campos: Titulo, Autor, Descripcion, Genero, Estado, AnoPublicacion, Portada (archivo)
+- `PUT /api/series/{id}` - Actualizar serie (creador o Admin)
+- `DELETE /api/series/{id}` - Eliminar serie (creador o Admin)
 
 ### Interacciones de Usuario (`/api/user`)
 
@@ -276,10 +292,15 @@ La aplicación estará disponible en:
 
 1. **Registrarse**: Crea una cuenta con usuario, email y contraseña
 2. **Explorar Comics**: Ve todos los comics aprobados en la página principal
-3. **Leer Comics**: Haz clic en "Leer" para ver el comic
-4. **Votar y Favoritos**: Interactúa con los comics que te gusten
-5. **Subir Comics**: Sube tus propios comics para revisión
-6. **Ver Perfil**: Revisa tus estadísticas y comics subidos
+3. **Explorar Series**: Navega a la sección "Series" para ver todas las series disponibles
+4. **Ver Detalle de Serie**: Haz clic en una serie para ver todos sus capítulos organizados
+5. **Leer Comics**: Haz clic en "Leer" para ver el comic o capítulo
+6. **Votar y Favoritos**: Interactúa con los comics que te gusten
+7. **Subir Comics**: Sube tus propios comics para revisión
+   - Opcionalmente, asocia el comic a una serie existente
+   - Especifica número de capítulo/volumen si corresponde
+8. **Crear Serie**: Crea una nueva serie con portada, descripción y metadatos
+9. **Ver Perfil**: Revisa tus estadísticas y comics subidos
 
 ### Como Administrador
 
@@ -336,15 +357,36 @@ dotnet ef database update
 - Revisa que el `Authorization` header esté presente
 - Verifica que el `SecretKey` en backend coincida
 
+## Características del Sistema de Series
+
+El sistema de series permite organizar comics en colecciones, ideal para mangas y comics de larga duración:
+
+### Funcionalidades
+- ✅ **Crear series** con título, autor, descripción, género, estado y año de publicación
+- ✅ **Subir portada personalizada** para cada serie
+- ✅ **Asociar comics a series** al momento de subirlos
+- ✅ **Organización automática** de capítulos por número de volumen y capítulo
+- ✅ **Página de detalle** mostrando todos los capítulos con miniaturas
+- ✅ **Estadísticas de serie** (total de capítulos, votos acumulados)
+- ✅ **Estados de serie** (En curso, Finalizada, Pausada)
+
+### Ejemplo de Uso
+1. Crear una serie llamada "One Piece" con su portada y descripción
+2. Subir capítulos individuales asociados a la serie
+3. Cada capítulo puede tener: número de volumen, número de capítulo, título del capítulo
+4. Los usuarios pueden ver todos los capítulos organizados en la página de detalle de la serie
+
 ## Próximas Mejoras
 
+- [x] ~~Sistema de series para organizar comics en colecciones~~ (✅ Implementado)
 - [ ] Implementar recuperación de contraseña por email
-- [ ] Agregar categorías y etiquetas a los comics
-- [ ] Sistema de comentarios y reseñas
-- [ ] Búsqueda avanzada y filtros
+- [ ] Agregar más categorías y etiquetas a los comics
+- [ ] Sistema de comentarios y reseñas por capítulo
+- [ ] Búsqueda avanzada y filtros por serie, género, autor
 - [ ] Soporte para leer comics por páginas (CBZ/CBR)
+- [ ] Marcador de última página leída por capítulo
 - [ ] Modo oscuro
-- [ ] Notificaciones en tiempo real
+- [ ] Notificaciones en tiempo real de nuevos capítulos
 - [ ] API REST completa con documentación OpenAPI
 
 ## Contribuciones

@@ -73,6 +73,15 @@ function App() {
                 }
                 return <ComicDetail comicId={viewData.id} onNavigate={handleNavigate} />;
 
+            case 'series-list':
+                return <SeriesList onNavigate={handleNavigate} />;
+
+            case 'serie-detail':
+                if (!viewData || !viewData.serieId) {
+                    return <div style={styles.error}>Serie no encontrada</div>;
+                }
+                return <SerieDetail serieId={viewData.serieId} onNavigate={handleNavigate} />;
+
             case 'login':
                 handleNavigate('home');
                 return <Home onNavigate={handleNavigate} />;

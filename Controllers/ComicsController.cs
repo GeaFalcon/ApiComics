@@ -35,6 +35,7 @@ namespace ComicReaderBackend.Controllers
                 .Where(c => c.Aprobado == true)
                 .Include(c => c.SubidoPor)
                 .Include(c => c.Votos)
+                .Include(c => c.Serie)
                 .Select(c => new
                 {
                     c.Id,
@@ -45,7 +46,12 @@ namespace ComicReaderBackend.Controllers
                     c.RutaMiniatura,
                     c.FechaSubida,
                     SubidoPor = c.SubidoPor != null ? c.SubidoPor.Username : "Unknown",
-                    TotalVotos = c.Votos != null ? c.Votos.Count : 0
+                    TotalVotos = c.Votos != null ? c.Votos.Count : 0,
+                    c.SerieId,
+                    SerieTitulo = c.Serie != null ? c.Serie.Titulo : null,
+                    c.NumeroCapitulo,
+                    c.NumeroVolumen,
+                    c.TituloCapitulo
                 })
                 .OrderByDescending(c => c.FechaSubida)
                 .ToListAsync();
@@ -273,7 +279,12 @@ namespace ComicReaderBackend.Controllers
                 RutaMiniatura = rutaMiniatura,
                 FechaSubida = DateTime.UtcNow,
                 SubidoPorId = userId,
-                Aprobado = false // Los comics necesitan aprobación de un admin
+                Aprobado = false, // Los comics necesitan aprobación de un admin
+                // Campos de serie
+                SerieId = uploadDto.SerieId,
+                NumeroCapitulo = uploadDto.NumeroCapitulo,
+                NumeroVolumen = uploadDto.NumeroVolumen,
+                TituloCapitulo = uploadDto.TituloCapitulo
             };
 
             _logger.LogInformation("Guardando comic en base de datos...");
