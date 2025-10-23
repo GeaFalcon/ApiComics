@@ -15,42 +15,15 @@ namespace ComicReaderBackend.Data
             {
                 logger.LogInformation("🔄 Iniciando configuración de base de datos...");
 
-                // Verificar si la base de datos existe
-                var canConnect = await context.Database.CanConnectAsync();
+                // 🔥 SOLUCIÓN TEMPORAL: Eliminar y recrear siempre (comentar después de la primera ejecución)
+                logger.LogWarning("⚠️  FORZANDO eliminación de base de datos para corregir esquema...");
+                await context.Database.EnsureDeletedAsync();
+                logger.LogInformation("✅ Base de datos eliminada");
 
-                if (!canConnect)
-                {
-                    logger.LogInformation("📦 Base de datos no existe. Creando con migraciones...");
-                    await context.Database.MigrateAsync();
-                    logger.LogInformation("✅ Base de datos creada correctamente");
-                }
-                else
-                {
-                    // La base de datos existe, verificar migraciones
-                    var appliedMigrations = await context.Database.GetAppliedMigrationsAsync();
-                    var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
-
-                    // Si no hay migraciones aplicadas pero hay pendientes (BD creada con EnsureCreated)
-                    if (!appliedMigrations.Any() && pendingMigrations.Any())
-                    {
-                        logger.LogWarning("⚠️  Base de datos creada sin migraciones. Eliminando y recreando con migraciones...");
-                        await context.Database.EnsureDeletedAsync();
-                        await context.Database.MigrateAsync();
-                        logger.LogInformation("✅ Base de datos recreada con migraciones");
-                    }
-                    else if (pendingMigrations.Any())
-                    {
-                        // Hay migraciones pendientes, aplicarlas
-                        logger.LogInformation($"📦 Aplicando {pendingMigrations.Count()} migraciones pendientes...");
-                        await context.Database.MigrateAsync();
-                        logger.LogInformation("✅ Migraciones aplicadas correctamente");
-                    }
-                    else
-                    {
-                        // Base de datos actualizada
-                        logger.LogInformation("✅ Base de datos ya está actualizada");
-                    }
-                }
+                // Crear base de datos con todas las migraciones
+                logger.LogInformation("📦 Creando base de datos con migraciones...");
+                await context.Database.MigrateAsync();
+                logger.LogInformation("✅ Base de datos creada correctamente con todas las tablas");
 
                 // Crear usuario administrador por defecto si no existe
                 await CreateDefaultAdminAsync(context, logger);
