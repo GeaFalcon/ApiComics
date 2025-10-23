@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom animations */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Custom styles for drag and drop */
+@layer components {
+  .drag-area {
+    @apply border-2 border-dashed border-gray-300 rounded-lg p-8 text-center transition-all duration-300;
+  }
+
+  .drag-area.drag-over {
+    @apply border-primary-500 bg-purple-50;
+  }
+}
