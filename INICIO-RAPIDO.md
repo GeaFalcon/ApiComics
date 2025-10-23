@@ -68,7 +68,7 @@ CREATE DATABASE comicdb;
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Host=localhost;Port=5432;Database=comicdb;Username=TU_USUARIO;Password=TU_PASSWORD"
+    "DefaultConnection": "Host=localhost;Port=5433;Database=comicdb;Username=TU_USUARIO;Password=TU_PASSWORD"
   }
 }
 ```
@@ -111,10 +111,10 @@ La aplicación automáticamente:
 **Sin Docker:** Verifica que PostgreSQL esté corriendo:
 ```bash
 # Linux/Mac
-pg_isready -h localhost -p 5432
+pg_isready -h localhost -p 5433
 
 # Windows
-pg_isready.exe -h localhost -p 5432
+pg_isready.exe -h localhost -p 5433
 ```
 
 ### Error: "Puerto 5000 ya en uso"

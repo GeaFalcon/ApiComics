@@ -152,7 +152,7 @@ CREATE DATABASE comicdb;
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Host=localhost;Port=5432;Database=comicdb;Username=tu_usuario;Password=tu_contraseña"
+    "DefaultConnection": "Host=localhost;Port=5433;Database=comicdb;Username=tu_usuario;Password=tu_contraseña"
   }
 }
 ```
@@ -350,7 +350,7 @@ dotnet ef database update
 ### Error de Conexión a Base de Datos
 - Verifica que PostgreSQL esté corriendo
 - Verifica las credenciales en `appsettings.json`
-- Verifica que el puerto sea el correcto (default: 5432)
+- Verifica que el puerto sea el correcto (default: 5433)
 
 ### Error 401 Unauthorized
 - Verifica que el token JWT sea válido

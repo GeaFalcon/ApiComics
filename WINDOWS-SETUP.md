@@ -68,7 +68,7 @@ Abre tu navegador en: http://localhost:5000
    ```json
    {
      "ConnectionStrings": {
-       "DefaultConnection": "Host=localhost;Port=5432;Database=comicdb;Username=postgres;Password=TU_PASSWORD"
+       "DefaultConnection": "Host=localhost;Port=5433;Database=comicdb;Username=postgres;Password=TU_PASSWORD"
      }
    }
    ```

@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: comicpass123
       POSTGRES_DB: comicdb
     ports:
-      - "5432:5432"
+      - "5433:5433"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -26,7 +26,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5000
-      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=comicdb;Username=comicuser;Password=comicpass123
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5433;Database=comicdb;Username=comicuser;Password=comicpass123
     depends_on:
       db:
         condition: service_healthy
