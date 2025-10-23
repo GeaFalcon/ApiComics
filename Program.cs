@@ -106,7 +106,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Habilitar archivos estáticos primero
+// Habilitar archivos por defecto (index.html)
+app.UseDefaultFiles();
+
+// Habilitar archivos estáticos
 app.UseStaticFiles();
 
 // Usar CORS después de archivos estáticos
@@ -118,6 +121,9 @@ app.UseAuthorization();
 
 // Mapea automáticamente los controladores para que funcionen las rutas API
 app.MapControllers();
+
+// 🔹 Fallback para SPA - redirige todas las rutas no API a index.html
+app.MapFallbackToFile("index.html");
 
 // 🔹 NO agregar URLs aquí, ya están configuradas en appsettings.json
 // app.Urls.Add("http://0.0.0.0:5000");

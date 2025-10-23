@@ -77,7 +77,7 @@ namespace ComicReaderBackend.Controllers
                     s.FechaCreacion,
                     s.CreadoPorId,
                     CreadoPorUsername = s.CreadoPor != null ? s.CreadoPor.Username : "Unknown",
-                    Capitulos = s.Comics != null ? s.Comics
+                    Capitulos = (s.Comics ?? new List<Comic>())
                         .Where(c => c.Aprobado)
                         .OrderBy(c => c.NumeroVolumen)
                         .ThenBy(c => c.NumeroCapitulo)
@@ -94,7 +94,7 @@ namespace ComicReaderBackend.Controllers
                             c.FechaSubida,
                             SubidoPor = c.SubidoPor != null ? c.SubidoPor.Username : "Unknown",
                             TotalVotos = c.Votos != null ? c.Votos.Count : 0
-                        }).ToList() : new List<object>(),
+                        }).ToList(),
                     TotalCapitulos = s.Comics != null ? s.Comics.Count(c => c.Aprobado) : 0,
                     TotalVotos = s.Comics != null ? s.Comics.Where(c => c.Aprobado).Sum(c => c.Votos != null ? c.Votos.Count : 0) : 0
                 })

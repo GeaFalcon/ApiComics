@@ -162,7 +162,7 @@ INICIO-WINDOWS.bat
 2. **Instalar PostgreSQL**
 
    - Ejecuta el instalador
-   - Puerto: deja el `5432` por defecto
+   - Puerto: deja el `5433` por defecto
    - **Contraseña:** Elige una contraseña y RECUÉRDALA (ej: `postgres123`)
    - Componentes: marca todos
    - Locale: Default
@@ -194,12 +194,12 @@ INICIO-WINDOWS.bat
 
    Busca esta línea:
    ```json
-   "DefaultConnection": "Host=localhost;Port=5432;Database=comicdb;Username=postgres;Password=6469"
+   "DefaultConnection": "Host=localhost;Port=5433;Database=comicdb;Username=postgres;Password=6469"
    ```
 
    Cámbiala por:
    ```json
-   "DefaultConnection": "Host=localhost;Port=5432;Database=comicdb;Username=postgres;Password=TU_CONTRASEÑA"
+   "DefaultConnection": "Host=localhost;Port=5433;Database=comicdb;Username=postgres;Password=TU_CONTRASEÑA"
    ```
 
    Reemplaza `TU_CONTRASEÑA` con la contraseña que pusiste al instalar PostgreSQL.
@@ -361,7 +361,7 @@ nano appsettings.json
 
 Cambia la línea de conexión a:
 ```json
-"DefaultConnection": "Host=localhost;Port=5432;Database=comicdb;Username=comicuser;Password=comicpass123"
+"DefaultConnection": "Host=localhost;Port=5433;Database=comicdb;Username=comicuser;Password=comicpass123"
 ```
 
 Guarda con `Ctrl+O`, Enter, `Ctrl+X`
@@ -502,7 +502,7 @@ nano appsettings.json
 
 Cambia la conexión a:
 ```json
-"DefaultConnection": "Host=localhost;Port=5432;Database=comicdb;Username=comicuser;Password=comicpass123"
+"DefaultConnection": "Host=localhost;Port=5433;Database=comicdb;Username=comicuser;Password=comicpass123"
 ```
 
 ### Paso 6: Ejecutar

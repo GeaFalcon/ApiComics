@@ -59,7 +59,7 @@
 
   Requisitos:
   - .NET 8.0 SDK
-  - PostgreSQL corriendo en localhost:5432
+  - PostgreSQL corriendo en localhost:5433
 
   Comandos:
 

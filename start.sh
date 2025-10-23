@@ -49,8 +49,8 @@ fi
 
 # Verificar si PostgreSQL está corriendo
 echo "🔍 Verificando PostgreSQL..."
-if ! pg_isready -h localhost -p 5432 &> /dev/null; then
-    echo "⚠️  PostgreSQL no está corriendo en localhost:5432"
+if ! pg_isready -h localhost -p 5433 &> /dev/null; then
+    echo "⚠️  PostgreSQL no está corriendo en localhost:5433"
     echo "   Por favor, inicia PostgreSQL o usa Docker con la opción 1"
     echo ""
     read -p "¿Continuar de todas formas? (s/n): " continue

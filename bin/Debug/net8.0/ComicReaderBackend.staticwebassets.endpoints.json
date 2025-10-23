@@ -1,493 +1,19 @@
 {
   "Version": 1,
-  "Hash": "dRQItY0gwdjbGsWunsDdbbzqYLACt0no2pUbZPpZ9co=",
-  "Source": "ComicReaderBackend",
-  "BasePath": "_content/ComicReaderBackend",
-  "Mode": "Default",
   "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [
-    {
-      "Name": "ComicReaderBackend\\wwwroot",
-      "Source": "ComicReaderBackend",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "Pattern": "**"
-    }
-  ],
-  "Assets": [
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\css\\input.css",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "css/input#[.{fingerprint}]?.css",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "jw6ckjd8e7",
-      "Integrity": "8z0jWNjY/tR3zGIUcqXdoTVxAWHaiCIITGV4gXDiI8I=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\input.css"
-    },
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\css\\output.css",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "css/output#[.{fingerprint}]?.css",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "hmxnpm12kq",
-      "Integrity": "+WpzHzma/9I0ijtdVeMIRESJ4KWpD6xN+W0OEjGCYYg=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\output.css"
-    },
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\index.html",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "index#[.{fingerprint}]?.html",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "3p43xyo2c2",
-      "Integrity": "eTx8bdRwbRHT4TPsk20PxqwC4juKRJ+rmcTClmD0BTE=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\index.html"
-    },
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\App.js",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "js/App#[.{fingerprint}]?.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "i20wcxwyjg",
-      "Integrity": "WvjSs7wJeQwjxaX6m4Pu0nyfISBUsBKCwE5YTF8M9Z0=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\App.js"
-    },
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\AdminPanel.js",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "js/components/AdminPanel#[.{fingerprint}]?.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "3qap2quawp",
-      "Integrity": "dbOPHgZv/NTW7bLVsPDJoAhlfKX8KkoaT6+XZWkmzIw=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\components\\AdminPanel.js"
-    },
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\ComicDetail.js",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "js/components/ComicDetail#[.{fingerprint}]?.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "4j27nqxw7i",
-      "Integrity": "kDff5LNZ1vc7IWHgdNaP2uxEBgUdLvmZUImN6lIqWxM=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\components\\ComicDetail.js"
-    },
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\ComicList.js",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "js/components/ComicList#[.{fingerprint}]?.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "n5oeolj6un",
-      "Integrity": "NVJBWcCdY9CDphkkq3Wd6JB+xls81zcaqKZyoLJfrSo=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\components\\ComicList.js"
-    },
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\ComicUpload.js",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "js/components/ComicUpload#[.{fingerprint}]?.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "ehyasbq2xp",
-      "Integrity": "7moMGBLP+LWrK7I4qEXL4Qj3P94T4dFR9waiuTSqNRk=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\components\\ComicUpload.js"
-    },
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\Favorites.js",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "js/components/Favorites#[.{fingerprint}]?.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "4zluhgs4ut",
-      "Integrity": "QIT7u+kVVNuT0teGQ6ABLQibgA7rrWKkmt3z4n7Prj8=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\components\\Favorites.js"
-    },
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\Home.js",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "js/components/Home#[.{fingerprint}]?.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "o32tlxhxe4",
-      "Integrity": "5FiiPZwCnZQDzmuLaYO1Ie8iO42zCYUQ/VeNb4zIcF8=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\components\\Home.js"
-    },
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\Login.js",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "js/components/Login#[.{fingerprint}]?.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "3v7pxd7wbe",
-      "Integrity": "D3m+u7wVX9MWUW6go01M/Rxi8P60h4YU8RMslBP8DS4=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\components\\Login.js"
-    },
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\Navbar.js",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "js/components/Navbar#[.{fingerprint}]?.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "w4znpahu1s",
-      "Integrity": "oMIo6IwHVE42gapT78+Pd2j7ax9fei1MfK2HvjNVjGQ=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\components\\Navbar.js"
-    },
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\ReadingHistory.js",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "js/components/ReadingHistory#[.{fingerprint}]?.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "jax8v85s4p",
-      "Integrity": "i0mILhyuCtVSRWuZpOcEXpSdwtNrDsUGOhXOu9bExQ4=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\components\\ReadingHistory.js"
-    },
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\Register.js",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "js/components/Register#[.{fingerprint}]?.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "5u5ea7y70p",
-      "Integrity": "Dbt8tN/3BTVZpiemTPUwBYlg56AYucyUO8M0TEraLqc=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\components\\Register.js"
-    },
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\SerieDetail.js",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "js/components/SerieDetail#[.{fingerprint}]?.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "yneset51rb",
-      "Integrity": "wtQv8CT1uTDLl39rJQWra86fYXMyUPWxqB8jQmYGrBM=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\components\\SerieDetail.js"
-    },
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\SeriesList.js",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "js/components/SeriesList#[.{fingerprint}]?.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "ordm0jsnsm",
-      "Integrity": "zGSUTiTtTmfinhiXbLqfs6CdgbZ0v88jk76AcXqSIJ0=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\components\\SeriesList.js"
-    },
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\UserProfile.js",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "js/components/UserProfile#[.{fingerprint}]?.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "w4gsy9ybcc",
-      "Integrity": "sEakXXjOLkpq+ApQirIhQ9pXWpFkMP/ZuBjvtUw4WsU=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\components\\UserProfile.js"
-    },
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\config.js",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "js/config#[.{fingerprint}]?.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "rwcu0e3l79",
-      "Integrity": "2wRezPJuw5EgRzImbas3DpaPfAiHyAEsMDOP9fkj3Do=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\config.js"
-    },
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\utils\\api.js",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "js/utils/api#[.{fingerprint}]?.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "jhpcihtiau",
-      "Integrity": "B5JCD8WGoZZVysBgU7k6rSi+rGiZpZKgHtxCbd7WvAk=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\utils\\api.js"
-    },
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\utils\\auth.js",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "js/utils/auth#[.{fingerprint}]?.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "uyujhlrylo",
-      "Integrity": "hnghDBaLREYmknWPINqMs6KQKcVhe3pUDgR5Xla+7eA=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\utils\\auth.js"
-    },
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\uploads\\3cf39ef6-0161-4358-8e0c-fdc4f354b38e_(00-10)  Solo Leveling.pdf",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "uploads/3cf39ef6-0161-4358-8e0c-fdc4f354b38e_(00-10)  Solo Leveling#[.{fingerprint}]?.pdf",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "v0uovbr18k",
-      "Integrity": "AdcRyp8NktX5dig1T7zLGMxe4hRluhMIMXoQIbmIgGo=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\3cf39ef6-0161-4358-8e0c-fdc4f354b38e_(00-10)  Solo Leveling.pdf"
-    },
-    {
-      "Identity": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\uploads\\Solo Leveling Ragnarok - [1].cbz",
-      "SourceId": "ComicReaderBackend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\",
-      "BasePath": "_content/ComicReaderBackend",
-      "RelativePath": "uploads/Solo Leveling Ragnarok - [1]#[.{fingerprint}]?.cbz",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "v8aa431pa5",
-      "Integrity": "XxKfMJhYdtEF6nbxDo5BrfySMPAkaSpgVTXvc/gAeGE=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\Solo Leveling Ragnarok - [1].cbz"
-    }
-  ],
   "Endpoints": [
     {
       "Route": "css/input.css",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\css\\input.css",
+      "AssetFile": "css/input.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -504,10 +30,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -519,12 +41,16 @@
     },
     {
       "Route": "css/input.jw6ckjd8e7.css",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\css\\input.css",
+      "AssetFile": "css/input.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -541,10 +67,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -553,23 +75,27 @@
           "Value": "jw6ckjd8e7"
         },
         {
-          "Name": "label",
-          "Value": "css/input.css"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-8z0jWNjY/tR3zGIUcqXdoTVxAWHaiCIITGV4gXDiI8I="
+        },
+        {
+          "Name": "label",
+          "Value": "css/input.css"
         }
       ]
     },
     {
       "Route": "css/output.css",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\css\\output.css",
+      "AssetFile": "css/output.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -586,10 +112,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -601,12 +123,16 @@
     },
     {
       "Route": "css/output.hmxnpm12kq.css",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\css\\output.css",
+      "AssetFile": "css/output.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -623,10 +149,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -635,23 +157,27 @@
           "Value": "hmxnpm12kq"
         },
         {
-          "Name": "label",
-          "Value": "css/output.css"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-+WpzHzma/9I0ijtdVeMIRESJ4KWpD6xN+W0OEjGCYYg="
+        },
+        {
+          "Name": "label",
+          "Value": "css/output.css"
         }
       ]
     },
     {
       "Route": "index.3p43xyo2c2.html",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\index.html",
+      "AssetFile": "index.html",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -668,10 +194,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -680,23 +202,27 @@
           "Value": "3p43xyo2c2"
         },
         {
-          "Name": "label",
-          "Value": "index.html"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-eTx8bdRwbRHT4TPsk20PxqwC4juKRJ+rmcTClmD0BTE="
+        },
+        {
+          "Name": "label",
+          "Value": "index.html"
         }
       ]
     },
     {
       "Route": "index.html",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\index.html",
+      "AssetFile": "index.html",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -713,10 +239,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -728,12 +250,16 @@
     },
     {
       "Route": "js/App.i20wcxwyjg.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\App.js",
+      "AssetFile": "js/App.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -750,10 +276,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -762,23 +284,27 @@
           "Value": "i20wcxwyjg"
         },
         {
-          "Name": "label",
-          "Value": "js/App.js"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-WvjSs7wJeQwjxaX6m4Pu0nyfISBUsBKCwE5YTF8M9Z0="
+        },
+        {
+          "Name": "label",
+          "Value": "js/App.js"
         }
       ]
     },
     {
       "Route": "js/App.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\App.js",
+      "AssetFile": "js/App.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -795,10 +321,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -810,12 +332,16 @@
     },
     {
       "Route": "js/components/AdminPanel.3qap2quawp.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\AdminPanel.js",
+      "AssetFile": "js/components/AdminPanel.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -832,10 +358,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -844,23 +366,27 @@
           "Value": "3qap2quawp"
         },
         {
-          "Name": "label",
-          "Value": "js/components/AdminPanel.js"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-dbOPHgZv/NTW7bLVsPDJoAhlfKX8KkoaT6+XZWkmzIw="
+        },
+        {
+          "Name": "label",
+          "Value": "js/components/AdminPanel.js"
         }
       ]
     },
     {
       "Route": "js/components/AdminPanel.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\AdminPanel.js",
+      "AssetFile": "js/components/AdminPanel.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -877,10 +403,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -892,12 +414,16 @@
     },
     {
       "Route": "js/components/ComicDetail.4j27nqxw7i.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\ComicDetail.js",
+      "AssetFile": "js/components/ComicDetail.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -914,10 +440,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -926,23 +448,27 @@
           "Value": "4j27nqxw7i"
         },
         {
-          "Name": "label",
-          "Value": "js/components/ComicDetail.js"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-kDff5LNZ1vc7IWHgdNaP2uxEBgUdLvmZUImN6lIqWxM="
+        },
+        {
+          "Name": "label",
+          "Value": "js/components/ComicDetail.js"
         }
       ]
     },
     {
       "Route": "js/components/ComicDetail.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\ComicDetail.js",
+      "AssetFile": "js/components/ComicDetail.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -959,10 +485,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -974,12 +496,16 @@
     },
     {
       "Route": "js/components/ComicList.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\ComicList.js",
+      "AssetFile": "js/components/ComicList.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -996,10 +522,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -1011,12 +533,16 @@
     },
     {
       "Route": "js/components/ComicList.n5oeolj6un.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\ComicList.js",
+      "AssetFile": "js/components/ComicList.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -1033,10 +559,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -1045,23 +567,27 @@
           "Value": "n5oeolj6un"
         },
         {
-          "Name": "label",
-          "Value": "js/components/ComicList.js"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-NVJBWcCdY9CDphkkq3Wd6JB+xls81zcaqKZyoLJfrSo="
+        },
+        {
+          "Name": "label",
+          "Value": "js/components/ComicList.js"
         }
       ]
     },
     {
       "Route": "js/components/ComicUpload.ehyasbq2xp.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\ComicUpload.js",
+      "AssetFile": "js/components/ComicUpload.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -1078,10 +604,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -1090,23 +612,27 @@
           "Value": "ehyasbq2xp"
         },
         {
-          "Name": "label",
-          "Value": "js/components/ComicUpload.js"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-7moMGBLP+LWrK7I4qEXL4Qj3P94T4dFR9waiuTSqNRk="
+        },
+        {
+          "Name": "label",
+          "Value": "js/components/ComicUpload.js"
         }
       ]
     },
     {
       "Route": "js/components/ComicUpload.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\ComicUpload.js",
+      "AssetFile": "js/components/ComicUpload.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -1123,10 +649,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -1138,12 +660,16 @@
     },
     {
       "Route": "js/components/Favorites.4zluhgs4ut.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\Favorites.js",
+      "AssetFile": "js/components/Favorites.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -1160,10 +686,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -1172,23 +694,27 @@
           "Value": "4zluhgs4ut"
         },
         {
-          "Name": "label",
-          "Value": "js/components/Favorites.js"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-QIT7u+kVVNuT0teGQ6ABLQibgA7rrWKkmt3z4n7Prj8="
+        },
+        {
+          "Name": "label",
+          "Value": "js/components/Favorites.js"
         }
       ]
     },
     {
       "Route": "js/components/Favorites.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\Favorites.js",
+      "AssetFile": "js/components/Favorites.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -1205,10 +731,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -1220,12 +742,16 @@
     },
     {
       "Route": "js/components/Home.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\Home.js",
+      "AssetFile": "js/components/Home.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -1242,10 +768,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -1257,12 +779,16 @@
     },
     {
       "Route": "js/components/Home.o32tlxhxe4.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\Home.js",
+      "AssetFile": "js/components/Home.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -1279,10 +805,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -1291,23 +813,27 @@
           "Value": "o32tlxhxe4"
         },
         {
-          "Name": "label",
-          "Value": "js/components/Home.js"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-5FiiPZwCnZQDzmuLaYO1Ie8iO42zCYUQ/VeNb4zIcF8="
+        },
+        {
+          "Name": "label",
+          "Value": "js/components/Home.js"
         }
       ]
     },
     {
       "Route": "js/components/Login.3v7pxd7wbe.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\Login.js",
+      "AssetFile": "js/components/Login.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -1324,10 +850,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -1336,23 +858,27 @@
           "Value": "3v7pxd7wbe"
         },
         {
-          "Name": "label",
-          "Value": "js/components/Login.js"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-D3m+u7wVX9MWUW6go01M/Rxi8P60h4YU8RMslBP8DS4="
+        },
+        {
+          "Name": "label",
+          "Value": "js/components/Login.js"
         }
       ]
     },
     {
       "Route": "js/components/Login.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\Login.js",
+      "AssetFile": "js/components/Login.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -1369,10 +895,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -1384,12 +906,16 @@
     },
     {
       "Route": "js/components/Navbar.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\Navbar.js",
+      "AssetFile": "js/components/Navbar.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -1406,10 +932,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -1421,12 +943,16 @@
     },
     {
       "Route": "js/components/Navbar.w4znpahu1s.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\Navbar.js",
+      "AssetFile": "js/components/Navbar.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -1443,10 +969,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -1455,23 +977,27 @@
           "Value": "w4znpahu1s"
         },
         {
-          "Name": "label",
-          "Value": "js/components/Navbar.js"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-oMIo6IwHVE42gapT78+Pd2j7ax9fei1MfK2HvjNVjGQ="
+        },
+        {
+          "Name": "label",
+          "Value": "js/components/Navbar.js"
         }
       ]
     },
     {
       "Route": "js/components/ReadingHistory.jax8v85s4p.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\ReadingHistory.js",
+      "AssetFile": "js/components/ReadingHistory.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -1488,10 +1014,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -1500,23 +1022,27 @@
           "Value": "jax8v85s4p"
         },
         {
-          "Name": "label",
-          "Value": "js/components/ReadingHistory.js"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-i0mILhyuCtVSRWuZpOcEXpSdwtNrDsUGOhXOu9bExQ4="
+        },
+        {
+          "Name": "label",
+          "Value": "js/components/ReadingHistory.js"
         }
       ]
     },
     {
       "Route": "js/components/ReadingHistory.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\ReadingHistory.js",
+      "AssetFile": "js/components/ReadingHistory.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -1533,10 +1059,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -1548,12 +1070,16 @@
     },
     {
       "Route": "js/components/Register.5u5ea7y70p.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\Register.js",
+      "AssetFile": "js/components/Register.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -1570,10 +1096,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -1582,23 +1104,27 @@
           "Value": "5u5ea7y70p"
         },
         {
-          "Name": "label",
-          "Value": "js/components/Register.js"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-Dbt8tN/3BTVZpiemTPUwBYlg56AYucyUO8M0TEraLqc="
+        },
+        {
+          "Name": "label",
+          "Value": "js/components/Register.js"
         }
       ]
     },
     {
       "Route": "js/components/Register.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\Register.js",
+      "AssetFile": "js/components/Register.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -1615,10 +1141,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -1630,12 +1152,16 @@
     },
     {
       "Route": "js/components/SerieDetail.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\SerieDetail.js",
+      "AssetFile": "js/components/SerieDetail.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -1652,10 +1178,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -1667,12 +1189,16 @@
     },
     {
       "Route": "js/components/SerieDetail.yneset51rb.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\SerieDetail.js",
+      "AssetFile": "js/components/SerieDetail.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -1689,10 +1215,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -1701,23 +1223,27 @@
           "Value": "yneset51rb"
         },
         {
-          "Name": "label",
-          "Value": "js/components/SerieDetail.js"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-wtQv8CT1uTDLl39rJQWra86fYXMyUPWxqB8jQmYGrBM="
+        },
+        {
+          "Name": "label",
+          "Value": "js/components/SerieDetail.js"
         }
       ]
     },
     {
       "Route": "js/components/SeriesList.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\SeriesList.js",
+      "AssetFile": "js/components/SeriesList.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -1734,10 +1260,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -1749,12 +1271,16 @@
     },
     {
       "Route": "js/components/SeriesList.ordm0jsnsm.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\SeriesList.js",
+      "AssetFile": "js/components/SeriesList.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -1771,10 +1297,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -1783,23 +1305,27 @@
           "Value": "ordm0jsnsm"
         },
         {
-          "Name": "label",
-          "Value": "js/components/SeriesList.js"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-zGSUTiTtTmfinhiXbLqfs6CdgbZ0v88jk76AcXqSIJ0="
+        },
+        {
+          "Name": "label",
+          "Value": "js/components/SeriesList.js"
         }
       ]
     },
     {
       "Route": "js/components/UserProfile.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\UserProfile.js",
+      "AssetFile": "js/components/UserProfile.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -1816,10 +1342,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -1831,12 +1353,16 @@
     },
     {
       "Route": "js/components/UserProfile.w4gsy9ybcc.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\components\\UserProfile.js",
+      "AssetFile": "js/components/UserProfile.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -1853,10 +1379,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -1865,23 +1387,27 @@
           "Value": "w4gsy9ybcc"
         },
         {
-          "Name": "label",
-          "Value": "js/components/UserProfile.js"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-sEakXXjOLkpq+ApQirIhQ9pXWpFkMP/ZuBjvtUw4WsU="
+        },
+        {
+          "Name": "label",
+          "Value": "js/components/UserProfile.js"
         }
       ]
     },
     {
       "Route": "js/config.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\config.js",
+      "AssetFile": "js/config.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -1898,10 +1424,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -1913,12 +1435,16 @@
     },
     {
       "Route": "js/config.rwcu0e3l79.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\config.js",
+      "AssetFile": "js/config.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -1935,10 +1461,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -1947,23 +1469,27 @@
           "Value": "rwcu0e3l79"
         },
         {
-          "Name": "label",
-          "Value": "js/config.js"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-2wRezPJuw5EgRzImbas3DpaPfAiHyAEsMDOP9fkj3Do="
+        },
+        {
+          "Name": "label",
+          "Value": "js/config.js"
         }
       ]
     },
     {
       "Route": "js/utils/api.jhpcihtiau.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\utils\\api.js",
+      "AssetFile": "js/utils/api.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -1980,10 +1506,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -1992,23 +1514,27 @@
           "Value": "jhpcihtiau"
         },
         {
-          "Name": "label",
-          "Value": "js/utils/api.js"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-B5JCD8WGoZZVysBgU7k6rSi+rGiZpZKgHtxCbd7WvAk="
+        },
+        {
+          "Name": "label",
+          "Value": "js/utils/api.js"
         }
       ]
     },
     {
       "Route": "js/utils/api.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\utils\\api.js",
+      "AssetFile": "js/utils/api.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -2025,10 +1551,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -2040,12 +1562,16 @@
     },
     {
       "Route": "js/utils/auth.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\utils\\auth.js",
+      "AssetFile": "js/utils/auth.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -2062,10 +1588,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -2077,12 +1599,16 @@
     },
     {
       "Route": "js/utils/auth.uyujhlrylo.js",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\js\\utils\\auth.js",
+      "AssetFile": "js/utils/auth.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -2099,10 +1625,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -2111,23 +1633,27 @@
           "Value": "uyujhlrylo"
         },
         {
-          "Name": "label",
-          "Value": "js/utils/auth.js"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-hnghDBaLREYmknWPINqMs6KQKcVhe3pUDgR5Xla+7eA="
+        },
+        {
+          "Name": "label",
+          "Value": "js/utils/auth.js"
         }
       ]
     },
     {
       "Route": "uploads/3cf39ef6-0161-4358-8e0c-fdc4f354b38e_(00-10)  Solo Leveling.pdf",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\uploads\\3cf39ef6-0161-4358-8e0c-fdc4f354b38e_(00-10)  Solo Leveling.pdf",
+      "AssetFile": "uploads/3cf39ef6-0161-4358-8e0c-fdc4f354b38e_(00-10)  Solo Leveling.pdf",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -2144,10 +1670,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 20:13:03 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -2159,12 +1681,16 @@
     },
     {
       "Route": "uploads/3cf39ef6-0161-4358-8e0c-fdc4f354b38e_(00-10)  Solo Leveling.v0uovbr18k.pdf",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\uploads\\3cf39ef6-0161-4358-8e0c-fdc4f354b38e_(00-10)  Solo Leveling.pdf",
+      "AssetFile": "uploads/3cf39ef6-0161-4358-8e0c-fdc4f354b38e_(00-10)  Solo Leveling.pdf",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -2181,10 +1707,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 20:13:03 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -2193,23 +1715,27 @@
           "Value": "v0uovbr18k"
         },
         {
-          "Name": "label",
-          "Value": "uploads/3cf39ef6-0161-4358-8e0c-fdc4f354b38e_(00-10)  Solo Leveling.pdf"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-AdcRyp8NktX5dig1T7zLGMxe4hRluhMIMXoQIbmIgGo="
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/3cf39ef6-0161-4358-8e0c-fdc4f354b38e_(00-10)  Solo Leveling.pdf"
         }
       ]
     },
     {
       "Route": "uploads/Solo Leveling Ragnarok - [1].cbz",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\uploads\\Solo Leveling Ragnarok - [1].cbz",
+      "AssetFile": "uploads/Solo Leveling Ragnarok - [1].cbz",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Length",
@@ -2226,10 +1752,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
         }
       ],
       "EndpointProperties": [
@@ -2241,12 +1763,16 @@
     },
     {
       "Route": "uploads/Solo Leveling Ragnarok - [1].v8aa431pa5.cbz",
-      "AssetFile": "C:\\Users\\jose_\\OneDrive\\Escritorio\\ApiComics\\wwwroot\\uploads\\Solo Leveling Ragnarok - [1].cbz",
+      "AssetFile": "uploads/Solo Leveling Ragnarok - [1].cbz",
       "Selectors": [],
       "ResponseHeaders": [
         {
           "Name": "Accept-Ranges",
           "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Length",
@@ -2263,10 +1789,6 @@
         {
           "Name": "Last-Modified",
           "Value": "Thu, 23 Oct 2025 19:45:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
         }
       ],
       "EndpointProperties": [
@@ -2275,12 +1797,12 @@
           "Value": "v8aa431pa5"
         },
         {
-          "Name": "label",
-          "Value": "uploads/Solo Leveling Ragnarok - [1].cbz"
-        },
-        {
           "Name": "integrity",
           "Value": "sha256-XxKfMJhYdtEF6nbxDo5BrfySMPAkaSpgVTXvc/gAeGE="
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/Solo Leveling Ragnarok - [1].cbz"
         }
       ]
     }

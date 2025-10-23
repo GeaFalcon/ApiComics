@@ -271,8 +271,8 @@ namespace ComicReaderBackend.Controllers
             // Crear el comic en la base de datos con formato autodetectado
             var nuevoComic = new Comic
             {
-                Titulo = uploadDto.Titulo,
-                Autor = uploadDto.Autor,
+                Titulo = uploadDto.Titulo!,
+                Autor = uploadDto.Autor!,
                 Descripcion = uploadDto.Descripcion,
                 Formato = formatoDetectado, // Usar formato autodetectado
                 RutaArchivo = "/uploads/" + fileName,
