@@ -15,15 +15,28 @@ namespace ComicReaderBackend.Data
             {
                 logger.LogInformation("🔄 Iniciando configuración de base de datos...");
 
-                // 🔥 SOLUCIÓN TEMPORAL: Eliminar y recrear siempre (comentar después de la primera ejecución)
-                logger.LogWarning("⚠️  FORZANDO eliminación de base de datos para corregir esquema...");
-                await context.Database.EnsureDeletedAsync();
-                logger.LogInformation("✅ Base de datos eliminada");
+                // Aplicar migraciones pendientes (esto NO borra datos existentes)
+                var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
 
-                // Crear base de datos con todas las migraciones
-                logger.LogInformation("📦 Creando base de datos con migraciones...");
-                await context.Database.MigrateAsync();
-                logger.LogInformation("✅ Base de datos creada correctamente con todas las tablas");
+                if (pendingMigrations.Any())
+                {
+                    logger.LogInformation($"📦 Aplicando {pendingMigrations.Count()} migraciones pendientes...");
+                    await context.Database.MigrateAsync();
+                    logger.LogInformation("✅ Migraciones aplicadas correctamente");
+                }
+                else
+                {
+                    // Si no hay migraciones, asegurarse de que la base de datos existe
+                    var created = await context.Database.EnsureCreatedAsync();
+                    if (created)
+                    {
+                        logger.LogInformation("✅ Base de datos creada correctamente");
+                    }
+                    else
+                    {
+                        logger.LogInformation("ℹ️  Base de datos ya existe, sin cambios necesarios");
+                    }
+                }
 
                 // Crear usuario administrador por defecto si no existe
                 await CreateDefaultAdminAsync(context, logger);

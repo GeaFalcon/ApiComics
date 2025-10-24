@@ -59,10 +59,10 @@ namespace ComicReaderBackend.Controllers
         {
             var serie = await _context.Series
                 .Include(s => s.CreadoPor)
-                .Include(s => s.Comics)
+                .Include(s => s.Comics!)
                     .ThenInclude(c => c.SubidoPor)
-                .Include(s => s.Comics)
-                    .ThenInclude(c => c.Votos)
+                .Include(s => s.Comics!)
+                    .ThenInclude(c => c.Votos!)
                 .Where(s => s.Id == id)
                 .Select(s => new
                 {
