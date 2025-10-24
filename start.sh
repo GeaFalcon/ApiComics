@@ -3,43 +3,6 @@
 echo "🚀 Iniciando Comic Reader Platform..."
 echo ""
 
-# Verificar si Docker está disponible
-DOCKER_COMPOSE_CMD=""
-
-if command -v docker &> /dev/null; then
-    # Probar 'docker compose' (nuevo)
-    if docker compose version &> /dev/null; then
-        DOCKER_COMPOSE_CMD="docker compose"
-    # Probar 'docker-compose' (antiguo)
-    elif command -v docker-compose &> /dev/null; then
-        DOCKER_COMPOSE_CMD="docker-compose"
-    fi
-fi
-
-if [ -n "$DOCKER_COMPOSE_CMD" ]; then
-    echo "🐳 Docker detectado. ¿Deseas usar Docker? (Recomendado)"
-    echo "1) Sí - Usar Docker (automático, incluye PostgreSQL)"
-    echo "2) No - Ejecutar localmente (requiere PostgreSQL instalado)"
-    read -p "Selecciona una opción (1/2): " choice
-
-    if [ "$choice" = "1" ]; then
-        echo ""
-        echo "🐳 Iniciando con Docker..."
-        echo "📦 Esto creará automáticamente:"
-        echo "   - Base de datos PostgreSQL"
-        echo "   - Aplicación ASP.NET Core"
-        echo "   - Usuario admin por defecto (admin / Admin123!)"
-        echo ""
-
-        $DOCKER_COMPOSE_CMD up --build
-        exit 0
-    fi
-fi
-
-echo ""
-echo "⚙️  Iniciando localmente..."
-echo ""
-
 # Verificar si .NET está instalado
 if ! command -v dotnet &> /dev/null; then
     echo "❌ Error: .NET 8.0 SDK no está instalado"
@@ -49,9 +12,9 @@ fi
 
 # Verificar si PostgreSQL está corriendo
 echo "🔍 Verificando PostgreSQL..."
-if ! pg_isready -h localhost -p 5433 &> /dev/null; then
-    echo "⚠️  PostgreSQL no está corriendo en localhost:5433"
-    echo "   Por favor, inicia PostgreSQL o usa Docker con la opción 1"
+if ! pg_isready -h localhost -p 5432 &> /dev/null && ! pg_isready -h localhost -p 5433 &> /dev/null; then
+    echo "⚠️  PostgreSQL no está corriendo"
+    echo "   Por favor, inicia PostgreSQL antes de continuar"
     echo ""
     read -p "¿Continuar de todas formas? (s/n): " continue
     if [ "$continue" != "s" ]; then

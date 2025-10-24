@@ -4,20 +4,7 @@ Plataforma web completa para lectura y gestión de comics, desarrollada con **AS
 
 ## 🚀 Inicio Rápido
 
-### Opción 1: Docker (Recomendado - Un Solo Comando)
-
-```bash
-docker compose up --build
-```
-
-> **Nota:** En versiones modernas de Docker Desktop es `docker compose` (con espacio), no `docker-compose`.
-> Si usas Windows, ver [WINDOWS-SETUP.md](WINDOWS-SETUP.md) para guía específica.
-
-Accede a http://localhost:5000 y usa:
-- **Usuario:** admin
-- **Contraseña:** Admin123!
-
-### Opción 2: Script de Inicio
+### Opción 1: Script de Inicio
 
 **Linux/Mac:**
 ```bash
@@ -29,7 +16,7 @@ Accede a http://localhost:5000 y usa:
 .\start.ps1
 ```
 
-### Opción 3: Ejecutar Directamente
+### Opción 2: Ejecutar Directamente
 
 ```bash
 dotnet run
@@ -171,9 +158,7 @@ CREATE DATABASE comicdb;
 
 ### Paso 2: Aplicar Migraciones
 
-> **Nota:** Si usas Docker, este paso NO es necesario. La aplicación crea automáticamente todas las tablas al iniciar.
-
-Si ejecutas manualmente con `dotnet run`, las tablas se crean automáticamente en el primer inicio. No necesitas ejecutar migraciones manualmente.
+Las tablas se crean automáticamente en el primer inicio. No necesitas ejecutar migraciones manualmente.
 
 Si prefieres usar migraciones de Entity Framework, puedes crear una:
 
@@ -350,7 +335,7 @@ dotnet ef database update
 ### Error de Conexión a Base de Datos
 - Verifica que PostgreSQL esté corriendo
 - Verifica las credenciales en `appsettings.json`
-- Verifica que el puerto sea el correcto (default: 5433)
+- Verifica que el puerto sea el correcto (default: 5432 o 5433)
 
 ### Error 401 Unauthorized
 - Verifica que el token JWT sea válido

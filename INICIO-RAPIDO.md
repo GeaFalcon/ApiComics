@@ -1,41 +1,6 @@
 # 🚀 Inicio Rápido
 
-## Opción 1: Con Docker (Recomendado - TODO AUTOMÁTICO)
-
-### Requisitos
-- Docker Desktop (incluye Docker Compose)
-
-### Comando único
-
-**Linux/Mac:**
-```bash
-docker compose up --build
-```
-
-**Windows (PowerShell):**
-```powershell
-docker compose up --build
-```
-
-> **Nota:** En versiones modernas de Docker Desktop es `docker compose` (con espacio), no `docker-compose`
-
-¡Eso es todo! Esto automáticamente:
-- ✅ Levanta PostgreSQL
-- ✅ Compila la aplicación
-- ✅ Aplica migraciones
-- ✅ Crea usuario admin (admin / Admin123!)
-- ✅ Inicia la aplicación
-
-**Accede a:** http://localhost:5000
-
-Para detener:
-```bash
-docker compose down
-```
-
----
-
-## Opción 2: Con Script de Inicio (Automático)
+## Opción 1: Con Script de Inicio (Automático)
 
 ### Linux/Mac
 ```bash
@@ -47,11 +12,9 @@ docker compose down
 .\start.ps1
 ```
 
-El script detecta Docker automáticamente y te pregunta si quieres usarlo.
-
 ---
 
-## Opción 3: Sin Docker (Manual)
+## Opción 2: Manual
 
 ### Requisitos
 - .NET 8.0 SDK
@@ -107,8 +70,7 @@ La aplicación automáticamente:
 ## 🐛 Solución de Problemas
 
 ### Error: "No se puede conectar a la base de datos"
-**Con Docker:** Espera unos segundos y reintenta. PostgreSQL tarda en iniciar.
-**Sin Docker:** Verifica que PostgreSQL esté corriendo:
+Verifica que PostgreSQL esté corriendo:
 ```bash
 # Linux/Mac
 pg_isready -h localhost -p 5433
@@ -118,18 +80,7 @@ pg_isready.exe -h localhost -p 5433
 ```
 
 ### Error: "Puerto 5000 ya en uso"
-Cambia el puerto en `docker-compose.yml` o `appsettings.json`:
-```yaml
-# docker-compose.yml
-ports:
-  - "5001:5000"  # Cambia 5001 al puerto que prefieras
-```
-
-### Reiniciar desde cero (Docker)
-```bash
-docker compose down -v
-docker compose up --build
-```
+Cambia el puerto en `appsettings.json` o detén el proceso que está usando el puerto 5000.
 
 ---
 

@@ -14,34 +14,25 @@ Se eliminaron las migraciones desactualizadas y se actualizó el `DbInitializer`
 
 ## Pasos para Resolver el Error
 
-### 1. Detener los contenedores actuales
+### 1. Detener la aplicación
 
-```powershell
-docker-compose down
+```bash
+# Presiona Ctrl+C en la terminal donde está corriendo
 ```
 
-### 2. Eliminar el volumen de la base de datos
+### 2. Eliminar la base de datos y recrearla
 
-**IMPORTANTE:** Esto eliminará todos los datos de la base de datos PostgreSQL. Es necesario para que se creen las nuevas tablas.
+**En PostgreSQL (psql o pgAdmin):**
 
-```powershell
-docker-compose down -v
+```sql
+DROP DATABASE comicdb;
+CREATE DATABASE comicdb;
 ```
 
-O si prefieres eliminar manualmente el volumen:
+### 3. Reiniciar la aplicación
 
-```powershell
-# Ver los volúmenes
-docker volume ls
-
-# Eliminar el volumen específico de la base de datos
-docker volume rm apicomics_postgres_data
-```
-
-### 3. Reconstruir y iniciar los contenedores
-
-```powershell
-docker-compose up --build
+```bash
+dotnet run
 ```
 
 ## Qué Esperar
@@ -49,15 +40,15 @@ docker-compose up --build
 Ahora deberías ver en los logs:
 
 ```
-comicreader-app  | 🔄 Iniciando configuración de base de datos...
-comicreader-app  | 📦 No se encontraron migraciones. Usando EnsureCreated...
-comicreader-app  | ✅ Base de datos y tablas creadas correctamente
-comicreader-app  | 👤 Creando usuario administrador por defecto...
-comicreader-app  | ✅ Usuario administrador creado:
-comicreader-app  |    👤 Usuario: admin
-comicreader-app  |    📧 Email: admin@comicreader.com
-comicreader-app  |    🔑 Contraseña: Admin123!
-comicreader-app  | ✅ Base de datos configurada correctamente
+🔄 Iniciando configuración de base de datos...
+📦 No se encontraron migraciones. Usando EnsureCreated...
+✅ Base de datos y tablas creadas correctamente
+👤 Creando usuario administrador por defecto...
+✅ Usuario administrador creado:
+   👤 Usuario: admin
+   📧 Email: admin@comicreader.com
+   🔑 Contraseña: Admin123!
+✅ Base de datos configurada correctamente
 ```
 
 ## Usuario Administrador por Defecto
@@ -72,7 +63,7 @@ El sistema crea automáticamente un usuario administrador:
 
 ## Acceder a la Aplicación
 
-Una vez que los contenedores estén corriendo sin errores:
+Una vez que la aplicación esté corriendo sin errores:
 
 1. Abre tu navegador
 2. Ve a: http://localhost:5000
@@ -83,13 +74,10 @@ Una vez que los contenedores estén corriendo sin errores:
 
 Si el problema persiste:
 
-1. Verifica que Docker Desktop esté corriendo
-2. Asegúrate de haber eliminado completamente el volumen de la base de datos
-3. Revisa los logs en busca de otros errores:
-   ```powershell
-   docker-compose logs -f
-   ```
-4. Puedes reiniciar Docker Desktop completamente
+1. Verifica que PostgreSQL esté corriendo
+2. Asegúrate de haber eliminado y recreado la base de datos
+3. Revisa los logs en busca de otros errores
+4. Verifica las credenciales en `appsettings.json`
 
 ## Cambios Técnicos Realizados
 
