@@ -28,25 +28,25 @@ function Favorites({ onNavigate }) {
         }
     };
 
-    if (loading) return <div style={styles.container}><div style={styles.loading}>Cargando...</div></div>;
+    if (loading) return <div className="max-w-7xl mx-auto p-8"><div className="text-center py-12 text-xl text-gray-600">Cargando...</div></div>;
 
     return (
-        <div style={styles.container}>
-            <h1 style={styles.title}>Mis Favoritos</h1>
+        <div className="max-w-7xl mx-auto p-8">
+            <h1 className="text-4xl font-bold text-gray-800 mb-8">Mis Favoritos</h1>
             {favorites.length === 0 ? (
-                <div style={styles.emptyState}>No tienes comics en favoritos</div>
+                <div className="text-center py-12 bg-gray-50 rounded-xl text-gray-600">No tienes comics en favoritos</div>
             ) : (
-                <div style={styles.grid}>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     {favorites.map((fav) => (
-                        <div key={fav.favoritoId} style={styles.card}>
-                            <h3 style={styles.cardTitle}>{fav.comic.titulo}</h3>
-                            <p><strong>Autor:</strong> {fav.comic.autor}</p>
-                            <p><strong>Votos:</strong> ❤️ {fav.comic.totalVotos}</p>
-                            <div style={styles.cardFooter}>
-                                <button style={styles.readButton} onClick={() => onNavigate('comic-detail', { id: fav.comic.id })}>
+                        <div key={fav.favoritoId} className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                            <h3 className="text-primary-500 text-xl font-bold mb-4">{fav.comic.titulo}</h3>
+                            <p className="text-gray-700 mb-2"><strong>Autor:</strong> {fav.comic.autor}</p>
+                            <p className="text-gray-700 mb-4"><strong>Votos:</strong> ❤️ {fav.comic.totalVotos}</p>
+                            <div className="flex gap-2 mt-4">
+                                <button className="flex-1 bg-primary-500 text-white border-none py-2 px-4 rounded-lg cursor-pointer transition-all duration-300 hover:bg-primary-600 font-semibold" onClick={() => onNavigate('comic-detail', { id: fav.comic.id })}>
                                     Leer
                                 </button>
-                                <button style={styles.removeButton} onClick={() => handleRemove(fav.comic.id)}>
+                                <button className="flex-1 bg-red-500 text-white border-none py-2 px-4 rounded-lg cursor-pointer transition-all duration-300 hover:bg-red-600 font-semibold" onClick={() => handleRemove(fav.comic.id)}>
                                     Quitar
                                 </button>
                             </div>
@@ -57,16 +57,3 @@ function Favorites({ onNavigate }) {
         </div>
     );
 }
-
-const styles = {
-    container: { maxWidth: '1200px', margin: '0 auto', padding: '2rem' },
-    title: { fontSize: '2rem', color: '#333', marginBottom: '2rem' },
-    loading: { textAlign: 'center', padding: '3rem', fontSize: '1.2rem', color: '#666' },
-    emptyState: { textAlign: 'center', padding: '3rem', background: '#f9f9f9', borderRadius: '10px', color: '#666' },
-    grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem' },
-    card: { background: 'white', borderRadius: '10px', padding: '1.5rem', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' },
-    cardTitle: { color: '#667eea', marginBottom: '1rem' },
-    cardFooter: { display: 'flex', gap: '0.5rem', marginTop: '1rem' },
-    readButton: { flex: 1, background: '#667eea', color: 'white', border: 'none', padding: '0.5rem', borderRadius: '5px', cursor: 'pointer' },
-    removeButton: { flex: 1, background: '#f44336', color: 'white', border: 'none', padding: '0.5rem', borderRadius: '5px', cursor: 'pointer' }
-};

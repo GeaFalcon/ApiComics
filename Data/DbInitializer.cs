@@ -15,15 +15,10 @@ namespace ComicReaderBackend.Data
             {
                 logger.LogInformation("🔄 Iniciando configuración de base de datos...");
 
-                // 🔥 SOLUCIÓN TEMPORAL: Eliminar y recrear siempre (comentar después de la primera ejecución)
-                logger.LogWarning("⚠️  FORZANDO eliminación de base de datos para corregir esquema...");
-                await context.Database.EnsureDeletedAsync();
-                logger.LogInformation("✅ Base de datos eliminada");
-
-                // Crear base de datos con todas las migraciones
-                logger.LogInformation("📦 Creando base de datos con migraciones...");
+                // Aplicar migraciones pendientes sin eliminar datos
+                logger.LogInformation("📦 Aplicando migraciones pendientes...");
                 await context.Database.MigrateAsync();
-                logger.LogInformation("✅ Base de datos creada correctamente con todas las tablas");
+                logger.LogInformation("✅ Base de datos actualizada correctamente con todas las tablas");
 
                 // Crear usuario administrador por defecto si no existe
                 await CreateDefaultAdminAsync(context, logger);

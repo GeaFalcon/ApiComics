@@ -26,63 +26,63 @@ function UserProfile({ onNavigate }) {
         }
     };
 
-    if (loading) return <div style={styles.container}><div style={styles.loading}>Cargando...</div></div>;
+    if (loading) return <div className="max-w-6xl mx-auto p-8"><div className="text-center py-12 text-xl text-gray-600">Cargando...</div></div>;
 
     return (
-        <div style={styles.container}>
-            <h1 style={styles.title}>Mi Perfil</h1>
+        <div className="max-w-6xl mx-auto p-8">
+            <h1 className="text-4xl font-bold text-gray-800 mb-8">Mi Perfil</h1>
 
-            <div style={styles.userCard}>
-                <h2 style={styles.username}>{user?.username}</h2>
-                <p style={styles.email}>{user?.email}</p>
-                <span style={styles.role}>{user?.role}</span>
+            <div className="bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl p-8 mb-8 text-center shadow-xl">
+                <h2 className="text-3xl font-bold m-0 mb-2">{user?.username}</h2>
+                <p className="text-lg m-0 mb-4 opacity-90">{user?.email}</p>
+                <span className="inline-block bg-white/30 px-4 py-2 rounded-full text-sm font-bold">{user?.role}</span>
             </div>
 
-            <h2 style={styles.subtitle}>Estadísticas</h2>
-            <div style={styles.statsGrid}>
-                <div style={styles.statCard}>
-                    <div style={styles.statNumber}>{stats?.favoritos}</div>
-                    <div style={styles.statLabel}>Favoritos</div>
+            <h2 className="text-2xl font-bold text-gray-800 mt-8 mb-4">Estadísticas</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+                <div className="bg-white rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div className="text-4xl font-bold text-primary-500 mb-2">{stats?.favoritos}</div>
+                    <div className="text-gray-600 text-sm">Favoritos</div>
                 </div>
-                <div style={styles.statCard}>
-                    <div style={styles.statNumber}>{stats?.votos}</div>
-                    <div style={styles.statLabel}>Votos</div>
+                <div className="bg-white rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div className="text-4xl font-bold text-primary-500 mb-2">{stats?.votos}</div>
+                    <div className="text-gray-600 text-sm">Votos</div>
                 </div>
-                <div style={styles.statCard}>
-                    <div style={styles.statNumber}>{stats?.comicsLeidos}</div>
-                    <div style={styles.statLabel}>Comics Leídos</div>
+                <div className="bg-white rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div className="text-4xl font-bold text-primary-500 mb-2">{stats?.comicsLeidos}</div>
+                    <div className="text-gray-600 text-sm">Comics Leídos</div>
                 </div>
-                <div style={styles.statCard}>
-                    <div style={styles.statNumber}>{stats?.comicsSubidos}</div>
-                    <div style={styles.statLabel}>Comics Subidos</div>
+                <div className="bg-white rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div className="text-4xl font-bold text-primary-500 mb-2">{stats?.comicsSubidos}</div>
+                    <div className="text-gray-600 text-sm">Comics Subidos</div>
                 </div>
-                <div style={styles.statCard}>
-                    <div style={styles.statNumber}>{stats?.comicsAprobados}</div>
-                    <div style={styles.statLabel}>Aprobados</div>
+                <div className="bg-white rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div className="text-4xl font-bold text-primary-500 mb-2">{stats?.comicsAprobados}</div>
+                    <div className="text-gray-600 text-sm">Aprobados</div>
                 </div>
-                <div style={styles.statCard}>
-                    <div style={styles.statNumber}>{stats?.comicsPendientes}</div>
-                    <div style={styles.statLabel}>Pendientes</div>
+                <div className="bg-white rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div className="text-4xl font-bold text-primary-500 mb-2">{stats?.comicsPendientes}</div>
+                    <div className="text-gray-600 text-sm">Pendientes</div>
                 </div>
             </div>
 
-            <h2 style={styles.subtitle}>Mis Comics Subidos</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mt-8 mb-4">Mis Comics Subidos</h2>
             {myComics.length === 0 ? (
-                <div style={styles.emptyState}>
+                <div className="text-center py-12 bg-gray-50 rounded-xl text-gray-600">
                     No has subido ningún comic aún.
-                    <button style={styles.uploadButton} onClick={() => onNavigate('upload')}>
+                    <button className="block mt-4 mx-auto bg-primary-500 hover:bg-primary-600 text-white border-none py-3 px-6 rounded-lg cursor-pointer text-base font-semibold transition-all duration-300 transform hover:scale-105" onClick={() => onNavigate('upload')}>
                         Subir Comic
                     </button>
                 </div>
             ) : (
-                <div style={styles.comicsList}>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                     {myComics.map((comic) => (
-                        <div key={comic.id} style={styles.comicCard}>
-                            <h3 style={styles.comicTitle}>{comic.titulo}</h3>
-                            <p><strong>Autor:</strong> {comic.autor}</p>
-                            <p><strong>Estado:</strong> {comic.aprobado ? '✓ Aprobado' : '⏳ Pendiente'}</p>
-                            <p><strong>Votos:</strong> ❤️ {comic.totalVotos}</p>
-                            <p style={styles.date}>{new Date(comic.fechaSubida).toLocaleDateString()}</p>
+                        <div key={comic.id} className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                            <h3 className="text-primary-500 text-lg font-bold mb-2">{comic.titulo}</h3>
+                            <p className="text-gray-700 mb-1 text-sm"><strong>Autor:</strong> {comic.autor}</p>
+                            <p className="text-gray-700 mb-1 text-sm"><strong>Estado:</strong> {comic.aprobado ? '✓ Aprobado' : '⏳ Pendiente'}</p>
+                            <p className="text-gray-700 mb-1 text-sm"><strong>Votos:</strong> ❤️ {comic.totalVotos}</p>
+                            <p className="text-xs text-gray-500 mt-2">{new Date(comic.fechaSubida).toLocaleDateString()}</p>
                         </div>
                     ))}
                 </div>
@@ -90,24 +90,3 @@ function UserProfile({ onNavigate }) {
         </div>
     );
 }
-
-const styles = {
-    container: { maxWidth: '1000px', margin: '0 auto', padding: '2rem' },
-    title: { fontSize: '2rem', color: '#333', marginBottom: '2rem' },
-    subtitle: { fontSize: '1.5rem', color: '#333', marginTop: '2rem', marginBottom: '1rem' },
-    loading: { textAlign: 'center', padding: '3rem', fontSize: '1.2rem', color: '#666' },
-    userCard: { background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white', borderRadius: '10px', padding: '2rem', marginBottom: '2rem', textAlign: 'center' },
-    username: { fontSize: '2rem', margin: '0 0 0.5rem 0' },
-    email: { fontSize: '1.1rem', margin: '0 0 1rem 0', opacity: 0.9 },
-    role: { background: 'rgba(255,255,255,0.3)', padding: '0.5rem 1rem', borderRadius: '20px', fontSize: '0.9rem', fontWeight: 'bold' },
-    statsGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1rem', marginBottom: '2rem' },
-    statCard: { background: 'white', borderRadius: '10px', padding: '1.5rem', textAlign: 'center', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' },
-    statNumber: { fontSize: '2.5rem', fontWeight: 'bold', color: '#667eea', marginBottom: '0.5rem' },
-    statLabel: { color: '#666', fontSize: '0.9rem' },
-    emptyState: { textAlign: 'center', padding: '3rem', background: '#f9f9f9', borderRadius: '10px', color: '#666' },
-    uploadButton: { marginTop: '1rem', background: '#667eea', color: 'white', border: 'none', padding: '0.75rem 1.5rem', borderRadius: '5px', cursor: 'pointer', fontSize: '1rem' },
-    comicsList: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '1rem' },
-    comicCard: { background: 'white', borderRadius: '10px', padding: '1.5rem', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' },
-    comicTitle: { color: '#667eea', marginBottom: '0.5rem' },
-    date: { fontSize: '0.85rem', color: '#999', marginTop: '0.5rem' }
-};
